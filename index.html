@@ -792,17 +792,8 @@
   const socialGithub = document.getElementById("socialGithub");
   const socialLinkedin = document.getElementById("socialLinkedin");
 
-  /* Social links visibility ranges - they appear at different scroll positions */
-  const socialRanges = [
-    { el: socialGithub,   start: 0.22, end: 0.32 },
-    { el: socialLinkedin, start: 0.22, end: 0.32 },
-    { el: socialGithub,   start: 0.42, end: 0.52 },
-    { el: socialLinkedin, start: 0.42, end: 0.52 },
-    { el: socialGithub,   start: 0.62, end: 0.68 },
-    { el: socialLinkedin, start: 0.62, end: 0.68 },
-    { el: socialGithub,   start: 0.82, end: 0.88 },
-    { el: socialLinkedin, start: 0.82, end: 0.88 },
-  ];
+  /* Social links appear at 75% of scroll and stay permanently */
+  let socialLinksRevealed = false;
 
   /* ── Loop mechanism ──────────────────────────────── */
   let isLooping = false;
@@ -928,19 +919,11 @@
     /* Secondary green — counter-phase fill */
     auroraBlobs[4].style.opacity = auroraBase * 0.8 + Math.cos(p * Math.PI * 3 + 1.8) * 0.09;
 
-    /* ── Social links: show/hide at scroll ranges ──── */
-    let githubVisible = false;
-    let linkedinVisible = false;
+    /* ── Social links: appear at 75% and stay permanently ── */
+    if (p >= 0.75) socialLinksRevealed = true;
 
-    socialRanges.forEach(({ el, start, end }) => {
-      if (p >= start && p <= end) {
-        if (el === socialGithub) githubVisible = true;
-        if (el === socialLinkedin) linkedinVisible = true;
-      }
-    });
-
-    socialGithub.classList.toggle("visible", githubVisible);
-    socialLinkedin.classList.toggle("visible", linkedinVisible);
+    socialGithub.classList.toggle("visible", socialLinksRevealed);
+    socialLinkedin.classList.toggle("visible", socialLinksRevealed);
 
     /* ── Shapes: spread outward on scroll ──────────── */
     const spread = ease(Math.min(p * 3, 1));
