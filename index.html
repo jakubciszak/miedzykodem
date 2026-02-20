@@ -9,7 +9,7 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
     }
 
     body {
@@ -18,6 +18,65 @@
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
       min-height: 600vh;
+    }
+
+    /* ── Aurora background glow ──────────────────── */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      mix-blend-mode: screen;
+    }
+
+    .aurora-blob--1 {
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0, 255, 135, 0.12) 0%, transparent 70%);
+      top: -10%;
+      left: -10%;
+    }
+
+    .aurora-blob--2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(123, 47, 255, 0.10) 0%, transparent 70%);
+      top: 20%;
+      right: -10%;
+    }
+
+    .aurora-blob--3 {
+      width: 700px;
+      height: 350px;
+      background: radial-gradient(ellipse, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+      bottom: 10%;
+      left: 20%;
+    }
+
+    .aurora-blob--4 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255, 110, 199, 0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .aurora-blob--5 {
+      width: 550px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(72, 255, 200, 0.09) 0%, transparent 70%);
+      top: 60%;
+      right: 5%;
     }
 
     /* ── Hero (sticky) ────────────────────────────── */
@@ -300,9 +359,95 @@
       white-space: nowrap;
       text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
     }
+
+    /* ── Social links ─────────────────────────────── */
+    .social-links {
+      position: fixed;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(20px);
+    }
+
+    .social-links.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .social-links--left {
+      bottom: 3rem;
+      left: 3rem;
+    }
+
+    .social-links--right {
+      bottom: 3rem;
+      right: 3rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      transition: color 0.3s ease, background 0.3s ease;
+      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .social-link:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .social-link span {
+      opacity: 0.7;
+    }
+
+    /* ── Loop transition flash ────────────────────── */
+    .loop-flash {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .loop-flash.active {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Aurora background -->
+  <div class="aurora" id="aurora">
+    <div class="aurora-blob aurora-blob--1" id="auroraBlob1"></div>
+    <div class="aurora-blob aurora-blob--2" id="auroraBlob2"></div>
+    <div class="aurora-blob aurora-blob--3" id="auroraBlob3"></div>
+    <div class="aurora-blob aurora-blob--4" id="auroraBlob4"></div>
+    <div class="aurora-blob aurora-blob--5" id="auroraBlob5"></div>
+  </div>
+
+  <!-- Loop transition -->
+  <div class="loop-flash" id="loopFlash"></div>
 
   <!-- Hero title -->
   <div class="hero">
@@ -374,6 +519,26 @@
     <span class="title-end">Między kodem, a kulturą</span>
   </div>
 
+  <!-- Social links - GitHub (left side) -->
+  <div class="social-links social-links--left" id="socialGithub">
+    <a href="https://github.com/jakubciszak" target="_blank" rel="noopener noreferrer" class="social-link">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+      </svg>
+      <span>jakubciszak</span>
+    </a>
+  </div>
+
+  <!-- Social links - LinkedIn (right side) -->
+  <div class="social-links social-links--right" id="socialLinkedin">
+    <a href="https://www.linkedin.com/in/jakub-ciszak" target="_blank" rel="noopener noreferrer" class="social-link">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+      <span>jakub-ciszak</span>
+    </a>
+  </div>
+
 <script>
   /* ── Helpers ─────────────────────────────────────── */
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -439,6 +604,52 @@
     origLeft: parseFloat(el.style.left),
   }));
 
+  /* ── Aurora blobs ────────────────────────────────── */
+  const auroraBlobs = [
+    document.getElementById("auroraBlob1"),
+    document.getElementById("auroraBlob2"),
+    document.getElementById("auroraBlob3"),
+    document.getElementById("auroraBlob4"),
+    document.getElementById("auroraBlob5"),
+  ];
+
+  /* ── Social link elements ────────────────────────── */
+  const socialGithub = document.getElementById("socialGithub");
+  const socialLinkedin = document.getElementById("socialLinkedin");
+
+  /* Social links visibility ranges - they appear at different scroll positions */
+  const socialRanges = [
+    { el: socialGithub,   start: 0.22, end: 0.32 },
+    { el: socialLinkedin, start: 0.22, end: 0.32 },
+    { el: socialGithub,   start: 0.42, end: 0.52 },
+    { el: socialLinkedin, start: 0.42, end: 0.52 },
+    { el: socialGithub,   start: 0.62, end: 0.68 },
+    { el: socialLinkedin, start: 0.62, end: 0.68 },
+    { el: socialGithub,   start: 0.82, end: 0.88 },
+    { el: socialLinkedin, start: 0.82, end: 0.88 },
+  ];
+
+  /* ── Loop mechanism ──────────────────────────────── */
+  let isLooping = false;
+  const loopFlash = document.getElementById("loopFlash");
+
+  function triggerLoop() {
+    if (isLooping) return;
+    isLooping = true;
+
+    loopFlash.classList.add("active");
+
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      update();
+
+      setTimeout(() => {
+        loopFlash.classList.remove("active");
+        setTimeout(() => { isLooping = false; }, 600);
+      }, 100);
+    }, 600);
+  }
+
   /* ── Scroll handler (rAF throttled) ─────────────── */
   let ticking = false;
 
@@ -456,6 +667,43 @@
 
     document.documentElement.style.setProperty("--p", p);
 
+    /* ── Loop: when reaching the end ────────────────── */
+    if (p >= 0.995 && !isLooping) {
+      triggerLoop();
+      return;
+    }
+
+    /* ── Aurora: animate blobs based on scroll ─────── */
+    const auroraBase = 0.06 + p * 0.15;
+    auroraBlobs[0].style.opacity = auroraBase + Math.sin(p * Math.PI * 2) * 0.04;
+    auroraBlobs[0].style.transform = `translate(${Math.sin(p * Math.PI * 3) * 40}px, ${Math.cos(p * Math.PI * 2) * 30}px)`;
+
+    auroraBlobs[1].style.opacity = auroraBase + Math.sin(p * Math.PI * 2 + 1) * 0.04;
+    auroraBlobs[1].style.transform = `translate(${Math.cos(p * Math.PI * 2.5) * 50}px, ${Math.sin(p * Math.PI * 3) * 35}px)`;
+
+    auroraBlobs[2].style.opacity = auroraBase * 0.8 + Math.sin(p * Math.PI * 2 + 2) * 0.03;
+    auroraBlobs[2].style.transform = `translate(${Math.sin(p * Math.PI * 2) * 30}px, ${Math.cos(p * Math.PI * 2.5) * 40}px)`;
+
+    auroraBlobs[3].style.opacity = auroraBase * 0.6 + Math.sin(p * Math.PI * 3 + 0.5) * 0.03;
+    auroraBlobs[3].style.transform = `translate(${-50 + Math.cos(p * Math.PI * 2) * 3}%, ${-50 + Math.sin(p * Math.PI * 2) * 3}%)`;
+
+    auroraBlobs[4].style.opacity = auroraBase * 0.7 + Math.cos(p * Math.PI * 2 + 1.5) * 0.04;
+    auroraBlobs[4].style.transform = `translate(${Math.cos(p * Math.PI * 3) * 45}px, ${Math.sin(p * Math.PI * 2) * 25}px)`;
+
+    /* ── Social links: show/hide at scroll ranges ──── */
+    let githubVisible = false;
+    let linkedinVisible = false;
+
+    socialRanges.forEach(({ el, start, end }) => {
+      if (p >= start && p <= end) {
+        if (el === socialGithub) githubVisible = true;
+        if (el === socialLinkedin) linkedinVisible = true;
+      }
+    });
+
+    socialGithub.classList.toggle("visible", githubVisible);
+    socialLinkedin.classList.toggle("visible", linkedinVisible);
+
     /* ── Shapes: spread outward on scroll ──────────── */
     const spread = ease(Math.min(p * 3, 1));
     shapeData.forEach(({ el, origTop, origLeft }) => {
@@ -470,7 +718,7 @@
 
     /* ── Scene visibility & animation ──────────────── */
 
-    // Scene 1: Grid (p 0.15 – 0.35)
+    // Scene 1: Grid (p 0.15 - 0.35)
     const g = band(p, 0.15, 0.35);
     const gShow = g > 0 && g < 1;
     document.getElementById("sceneGrid").style.opacity = gShow ? Math.min(g * 5, 1, (1 - g) * 5) : 0;
@@ -490,7 +738,7 @@
       });
     }
 
-    // Scene 2: Wave (p 0.30 – 0.55)
+    // Scene 2: Wave (p 0.30 - 0.55)
     const w = band(p, 0.30, 0.55);
     const wShow = w > 0 && w < 1;
     document.getElementById("sceneWave").style.opacity = wShow ? Math.min(w * 5, 1, (1 - w) * 5) : 0;
@@ -503,7 +751,7 @@
       });
     }
 
-    // Scene 3: Orbits (p 0.50 – 0.75)
+    // Scene 3: Orbits (p 0.50 - 0.75)
     const o = band(p, 0.50, 0.75);
     const oShow = o > 0 && o < 1;
     document.getElementById("sceneOrbit").style.opacity = oShow ? Math.min(o * 5, 1, (1 - o) * 5) : 0;
@@ -522,7 +770,7 @@
       });
     }
 
-    // Scene 4: Converge (p 0.70 – 0.90)
+    // Scene 4: Converge (p 0.70 - 0.90)
     const c = band(p, 0.70, 0.90);
     const cShow = c > 0 && c < 1;
     document.getElementById("sceneConverge").style.opacity = cShow ? Math.min(c * 5, 1, (1 - c) * 5) : 0;
@@ -540,7 +788,7 @@
       });
     }
 
-    // Final title (p 0.88 – 1.0)
+    // Final title (p 0.88 - 1.0)
     const f = band(p, 0.88, 1.0);
     document.getElementById("final").style.opacity = ease(f);
   }
