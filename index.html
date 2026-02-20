@@ -593,6 +593,54 @@
       border-radius: 50%;
       opacity: 0.5;
     }
+
+    /* ── Quotes carousel ────────────────────────────── */
+    .quotes-carousel {
+      position: fixed;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      max-width: 640px;
+      width: 88%;
+      text-align: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .quote-inner {
+      padding: 1.2rem 1.6rem;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .quote-text {
+      font-size: clamp(0.82rem, 1.6vw, 0.95rem);
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.50);
+      font-style: italic;
+      letter-spacing: 0.015em;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .quote-text.visible {
+      opacity: 1;
+    }
+
+    .quote-author {
+      font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.30);
+      margin-top: 0.7rem;
+      letter-spacing: 0.04em;
+      font-style: normal;
+    }
   </style>
 </head>
 <body>
@@ -692,6 +740,14 @@
   <!-- Final title with glow -->
   <div class="final" id="final">
     <span class="title-end">Między kodem, a kulturą</span>
+  </div>
+
+  <!-- Quotes carousel -->
+  <div class="quotes-carousel" id="quotesCarousel">
+    <div class="quote-inner">
+      <div class="quote-text" id="quoteText"></div>
+      <div class="quote-author" id="quoteAuthor"></div>
+    </div>
   </div>
 
   <!-- Social links - GitHub (left side) -->
@@ -794,6 +850,84 @@
 
   /* Social links appear at 75% of scroll and stay permanently */
   let socialLinksRevealed = false;
+
+  /* ── Quotes carousel ────────────────────────────── */
+  const quotesCarousel = document.getElementById("quotesCarousel");
+  const quoteTextEl = document.getElementById("quoteText");
+  const quoteAuthorEl = document.getElementById("quoteAuthor");
+
+  const quotes = [
+    { text: "Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.", author: "Melvin Conway, \u201CHow Do Committees Invent?\u201D (1968)" },
+    { text: "A Big Ball of Mud is a haphazardly structured, sprawling, sloppy, duct-tape-and-baling-wire, spaghetti-code jungle.", author: "Brian Foote & Joseph Yoder, \u201CBig Ball of Mud\u201D (1997)" },
+    { text: "Software architecture is the set of design decisions which, if made incorrectly, may cause your project to be cancelled.", author: "Eoin Woods" },
+    { text: "The best architectures, requirements, and designs emerge from self-organizing teams.", author: "Agile Manifesto (2001)" },
+    { text: "An evolutionary architecture supports guided, incremental change across multiple dimensions.", author: "Neal Ford, Rebecca Parsons, Patrick Kua, \u201CBuilding Evolutionary Architectures\u201D (2017)" },
+    { text: "To me, legacy code is simply code without tests.", author: "Michael Feathers, \u201CWorking Effectively with Legacy Code\u201D (2004)" },
+    { text: "Shipping first time code is like going into debt. A little debt speeds development so long as it is paid back promptly with a rewrite.", author: "Ward Cunningham, OOPSLA Experience Report (1992)" },
+    { text: "There are two ways to change a software system: add code or change existing code. Organizations that can\u2019t change their code effectively are in deep trouble.", author: "Michael Feathers, \u201CWorking Effectively with Legacy Code\u201D (2004)" },
+    { text: "When a system goes into production, in a way, it becomes its own specification.", author: "Michael Feathers" },
+    { text: "The Strangler Fig slowly grows over the original tree, eventually replacing it entirely.", author: "Martin Fowler, \u201CStrangler Fig Application\u201D (2004)" },
+    { text: "The single worst strategic mistake that any software company can make is to decide to rewrite the code from scratch.", author: "Joel Spolsky (2000)" },
+    { text: "The cost of change is not flat. And the agile practices, while they can significantly flatten the curve, cannot completely eliminate it.", author: "Scott Ambler" },
+    { text: "An E-type system must be continually adapted or it becomes progressively less satisfactory.", author: "Meir Lehman, First Law of Software Evolution (1974)" },
+    { text: "As an E-type system evolves, its complexity increases unless work is done to maintain or reduce it.", author: "Meir Lehman, Second Law of Software Evolution (1974)" },
+    { text: "Adding manpower to a late software project makes it later.", author: "Frederick Brooks, \u201CThe Mythical Man-Month\u201D (1975)" },
+    { text: "The bearing of a child takes nine months, no matter how many women are assigned.", author: "Frederick Brooks, \u201CThe Mythical Man-Month\u201D (1975)" },
+    { text: "The general tendency in most projects when faced with the Second-System Effect is to over-engineer the second system, using all the ideas and frills that were cautiously sidelined in the first.", author: "Frederick Brooks, \u201CThe Mythical Man-Month\u201D (1975)" },
+    { text: "Psychological safety is not about being nice. It\u2019s about giving candid feedback, openly admitting mistakes, and learning from each other.", author: "Amy Edmondson, \u201CThe Fearless Organization\u201D (2018)" },
+    { text: "No one wakes up in the morning and thinks: Today I\u2019ll fail. Human error is a symptom of trouble deeper inside a system.", author: "Sidney Dekker, \u201CJust Culture\u201D (2016)" },
+    { text: "Who is on a team matters less than how the team members interact, structure their work, and view their contributions.", author: "Google Project Aristotle (2015)" },
+    { text: "The critical complexity of most software projects is in understanding the domain itself.", author: "Eric Evans, \u201CDomain-Driven Design\u201D (2003)" },
+    { text: "When you have different vocabularies in different parts of the business, that\u2019s a sign of different bounded contexts.", author: "Eric Evans (DDD Europe, 2019)" },
+    { text: "For most systems, CQRS adds risky complexity.", author: "Martin Fowler, \u201CCQRS\u201D (2011)" },
+    { text: "Lean management, along with a set of other technical practices, do in fact impact software delivery performance in a statistically significant way.", author: "Nicole Forsgren, Jez Humble, Gene Kim, \u201CAccelerate\u201D (2018)" },
+    { text: "Improving software delivery performance means building quality in, not inspecting quality after the fact.", author: "Nicole Forsgren, Jez Humble, Gene Kim, \u201CAccelerate\u201D (2018)" },
+    { text: "There\u2019s no such thing as a five-minute job.", author: "Gene Kim, Kevin Behr, George Spafford, \u201CThe Phoenix Project\u201D (2013)" },
+    { text: "Every feature factory has a long list of delivered features and almost no measurement of whether those features produced any value.", author: "John Cutler, \u201C12 Signs You\u2019re Working in a Feature Factory\u201D (2016)" },
+    { text: "Dark Scrum takes Scrum\u2019s ideas and turns them into weapons against the very people Scrum was supposed to help.", author: "Ron Jeffries, \u201CDark Scrum\u201D (2016)" },
+    { text: "Cognitive load is the total amount of mental effort being used in working memory.", author: "John Sweller, \u201CCognitive Load During Problem Solving\u201D (1988)" },
+    { text: "Minimize the cognitive load that a team has to deal with. Limit the size of the software and its complexity.", author: "Matthew Skelton & Manuel Pais, \u201CTeam Topologies\u201D (2019)" },
+  ];
+
+  /* Shuffle quotes for variety on each load */
+  for (let i = quotes.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [quotes[i], quotes[j]] = [quotes[j], quotes[i]];
+  }
+
+  let currentQuoteIndex = 0;
+  let quoteVisible = false;
+  let quoteCycleTimer = null;
+  let carouselActive = false;
+
+  function showQuote(index) {
+    quoteTextEl.classList.remove("visible");
+    setTimeout(() => {
+      quoteTextEl.textContent = "\u201C" + quotes[index].text + "\u201D";
+      quoteAuthorEl.textContent = "\u2014 " + quotes[index].author;
+      quoteTextEl.classList.add("visible");
+    }, 800);
+  }
+
+  function cycleQuote() {
+    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+    showQuote(currentQuoteIndex);
+  }
+
+  function startQuoteCycle() {
+    if (carouselActive) return;
+    carouselActive = true;
+    showQuote(currentQuoteIndex);
+    quoteCycleTimer = setInterval(cycleQuote, 7000);
+  }
+
+  function stopQuoteCycle() {
+    if (!carouselActive) return;
+    carouselActive = false;
+    quoteTextEl.classList.remove("visible");
+    clearInterval(quoteCycleTimer);
+    quoteCycleTimer = null;
+  }
 
   /* ── Loop mechanism ──────────────────────────────── */
   let isLooping = false;
@@ -1007,6 +1141,18 @@
         dot.style.opacity = 0.3 + cEased * 0.7;
         dot.style.transform = `scale(${0.5 + cEased * 1.5})`;
       });
+    }
+
+    /* ── Quotes carousel visibility ─────────────────── */
+    const qFadeIn  = band(p, 0.06, 0.10);
+    const qFadeOut = band(p, 0.82, 0.88);
+    const qOpacity = p < 0.06 ? 0 : p > 0.88 ? 0 : Math.min(ease(qFadeIn), 1 - ease(qFadeOut));
+    quotesCarousel.style.opacity = qOpacity;
+
+    if (qOpacity > 0.05 && !carouselActive) {
+      startQuoteCycle();
+    } else if (qOpacity <= 0.05 && carouselActive) {
+      stopQuoteCycle();
     }
 
     // Final title (p 0.88 - 1.0)
