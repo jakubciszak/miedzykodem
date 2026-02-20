@@ -481,6 +481,118 @@
     .loop-flash.active {
       opacity: 1;
     }
+
+    /* ── Play button ─────────────────────────────── */
+    .play-btn {
+      position: fixed;
+      bottom: 7rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 12;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: radial-gradient(ellipse at 40% 35%,
+        rgba(0, 255, 130, 0.10) 0%,
+        rgba(100, 60, 255, 0.06) 50%,
+        rgba(0, 0, 0, 0.3) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      opacity: calc(1 - var(--p, 0) * 6);
+      pointer-events: auto;
+    }
+
+    .play-btn:hover {
+      border-color: rgba(255, 255, 255, 0.30);
+      box-shadow:
+        0 0 30px rgba(0, 255, 130, 0.12),
+        0 0 60px rgba(100, 60, 255, 0.06);
+      transform: translateX(-50%) scale(1.08);
+    }
+
+    .play-btn:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+
+    .play-btn.hidden {
+      opacity: 0 !important;
+      pointer-events: none;
+      transform: translateX(-50%) scale(0.85);
+    }
+
+    .play-btn .play-icon {
+      width: 20px;
+      height: 22px;
+      margin-left: 3px;
+      fill: rgba(255, 255, 255, 0.55);
+      transition: fill 0.3s ease;
+    }
+
+    .play-btn:hover .play-icon {
+      fill: rgba(255, 255, 255, 0.85);
+    }
+
+    .play-btn .pause-icon {
+      display: none;
+      width: 16px;
+      height: 18px;
+      fill: rgba(255, 255, 255, 0.55);
+      transition: fill 0.3s ease;
+    }
+
+    .play-btn:hover .pause-icon {
+      fill: rgba(255, 255, 255, 0.85);
+    }
+
+    .play-btn.playing .play-icon { display: none; }
+    .play-btn.playing .pause-icon { display: block; }
+
+    /* Subtle pulse ring animation */
+    .play-btn::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 130, 0.08);
+      animation: play-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes play-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%      { transform: scale(1.12); opacity: 0; }
+    }
+
+    /* ── Aurora band shapes ──────────────────────── */
+    .shape--aurora-band {
+      width: 120px;
+      height: 3px;
+      border-radius: 50%;
+      opacity: 0.18;
+      filter: blur(1px);
+    }
+
+    .shape--aurora-band-lg {
+      width: 180px;
+      height: 4px;
+      border-radius: 50%;
+      opacity: 0.14;
+      filter: blur(2px);
+    }
+
+    .shape--aurora-wave {
+      width: 100px;
+      height: 30px;
+      border: 1px solid transparent;
+      border-top-color: rgba(0, 255, 130, 0.12);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
   </style>
 </head>
 <body>
@@ -501,6 +613,17 @@
   <div class="hero">
     <h1 class="title">Między kodem, a kulturą</h1>
   </div>
+
+  <!-- Play button -->
+  <button class="play-btn" id="playBtn" aria-label="Odtwórz animację">
+    <svg class="play-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="5,3 19,12 5,21" />
+    </svg>
+    <svg class="pause-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="3" width="4" height="18" />
+      <rect x="15" y="3" width="4" height="18" />
+    </svg>
+  </button>
 
   <!-- Scroll indicator -->
   <div class="scroll-hint">
@@ -524,22 +647,26 @@
     <div class="shape shape--ring-lg" style="top:35%;left:10%; --fx:8px;  --fy:-18px;"></div>
     <div class="shape shape--ring-lg" style="top:55%;left:82%; --fx:-12px;--fy:8px;"></div>
 
-    <!-- Lines -->
-    <div class="shape shape--line"   style="top:30%;left:65%; --fx:20px; --fy:5px;"></div>
-    <div class="shape shape--line-v" style="top:65%;left:40%; --fx:-5px; --fy:20px;"></div>
-    <div class="shape shape--line"   style="top:80%;left:55%; --fx:-15px;--fy:-8px;"></div>
+    <!-- Aurora bands -->
+    <div class="shape shape--aurora-band" style="top:30%;left:65%; --fx:20px; --fy:5px; background:linear-gradient(90deg, transparent, rgba(0,255,130,0.25), transparent);"></div>
+    <div class="shape shape--aurora-band-lg" style="top:65%;left:35%; --fx:-15px; --fy:12px; background:linear-gradient(90deg, transparent, rgba(100,60,255,0.20), transparent);"></div>
+    <div class="shape shape--aurora-band" style="top:80%;left:55%; --fx:-15px;--fy:-8px; background:linear-gradient(90deg, transparent, rgba(0,230,255,0.22), transparent);"></div>
+
+    <!-- Aurora waves -->
+    <div class="shape shape--aurora-wave" style="top:22%;left:70%; --fx:14px; --fy:-6px; border-top-color:rgba(0,255,130,0.10);"></div>
+    <div class="shape shape--aurora-wave" style="top:55%;left:20%; --fx:-10px; --fy:8px; border-top-color:rgba(140,60,255,0.10);"></div>
 
     <!-- Brackets (code theme) -->
     <div class="shape shape--bracket" style="top:20%;left:22%; --fx:-12px;--fy:8px;">{</div>
     <div class="shape shape--bracket" style="top:20%;left:78%; --fx:12px; --fy:8px;">}</div>
 
-    <!-- Crosses -->
-    <div class="shape shape--cross" style="top:45%;left:18%; --fx:6px; --fy:-16px;"></div>
-    <div class="shape shape--cross" style="top:50%;left:80%; --fx:-8px;--fy:12px;"></div>
+    <!-- Aurora band accents -->
+    <div class="shape shape--aurora-band" style="top:45%;left:15%; --fx:8px; --fy:-14px; background:linear-gradient(90deg, transparent, rgba(255,80,180,0.18), transparent);"></div>
+    <div class="shape shape--aurora-band-lg" style="top:50%;left:75%; --fx:-12px;--fy:10px; background:linear-gradient(90deg, transparent, rgba(50,255,170,0.20), transparent);"></div>
 
-    <!-- Squares -->
+    <!-- Remaining geometric -->
     <div class="shape shape--square" style="top:78%;left:60%; --fx:10px; --fy:-6px;"></div>
-    <div class="shape shape--square" style="top:15%;left:45%; --fx:-6px; --fy:10px;"></div>
+    <div class="shape shape--aurora-band" style="top:15%;left:45%; --fx:-6px; --fy:10px; background:linear-gradient(90deg, transparent, rgba(0,200,255,0.20), transparent);"></div>
   </div>
 
   <!-- Scene 1: Grid -->
@@ -698,6 +825,60 @@
     }, 600);
   }
 
+  /* ── Auto-play mechanism ────────────────────────── */
+  const playBtn = document.getElementById("playBtn");
+  let autoPlaying = false;
+  let autoPlayRaf = null;
+
+  function startAutoPlay() {
+    if (autoPlaying) {
+      stopAutoPlay();
+      return;
+    }
+    autoPlaying = true;
+    playBtn.classList.add("playing");
+
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const totalDuration = 28000;
+    const startScroll = window.scrollY;
+    const remaining = maxScroll - startScroll;
+    const startTime = performance.now();
+
+    function autoStep(now) {
+      if (!autoPlaying) return;
+
+      const elapsed = now - startTime;
+      const rawT = Math.min(elapsed / totalDuration, 1);
+
+      /* Smooth ease-in-out */
+      const t = rawT < 0.05
+        ? 2 * rawT * rawT / 0.05
+        : rawT;
+
+      const targetScroll = startScroll + remaining * t;
+      window.scrollTo(0, targetScroll);
+
+      if (rawT < 1) {
+        autoPlayRaf = requestAnimationFrame(autoStep);
+      } else {
+        stopAutoPlay();
+      }
+    }
+
+    autoPlayRaf = requestAnimationFrame(autoStep);
+  }
+
+  function stopAutoPlay() {
+    autoPlaying = false;
+    playBtn.classList.remove("playing");
+    if (autoPlayRaf) {
+      cancelAnimationFrame(autoPlayRaf);
+      autoPlayRaf = null;
+    }
+  }
+
+  playBtn.addEventListener("click", startAutoPlay);
+
   /* ── Scroll handler (rAF throttled) ─────────────── */
   let ticking = false;
 
@@ -715,8 +896,16 @@
 
     document.documentElement.style.setProperty("--p", p);
 
+    /* ── Hide play button once scrolling ─────────────── */
+    if (p > 0.16) {
+      playBtn.classList.add("hidden");
+    } else {
+      playBtn.classList.remove("hidden");
+    }
+
     /* ── Loop: when reaching the end ────────────────── */
     if (p >= 0.995 && !isLooping) {
+      stopAutoPlay();
       triggerLoop();
       return;
     }
@@ -843,6 +1032,14 @@
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* Stop auto-play on manual user interaction */
+  window.addEventListener("wheel", () => { if (autoPlaying) stopAutoPlay(); }, { passive: true });
+  window.addEventListener("touchstart", () => { if (autoPlaying) stopAutoPlay(); }, { passive: true });
+  window.addEventListener("keydown", (e) => {
+    if (autoPlaying && (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === " ")) stopAutoPlay();
+  });
+
   update();
 </script>
 
