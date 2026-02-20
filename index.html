@@ -31,52 +31,100 @@
 
     .aurora-blob {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
+      border-radius: 40% 60% 50% 50%;
+      filter: blur(80px);
       opacity: 0;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.6s ease;
       mix-blend-mode: screen;
+      will-change: transform, opacity;
     }
 
+    /* Main green curtain — dominant aurora color */
     .aurora-blob--1 {
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(0, 255, 135, 0.12) 0%, transparent 70%);
-      top: -10%;
-      left: -10%;
-    }
-
-    .aurora-blob--2 {
-      width: 500px;
+      width: 900px;
       height: 500px;
-      background: radial-gradient(ellipse, rgba(123, 47, 255, 0.10) 0%, transparent 70%);
-      top: 20%;
-      right: -10%;
+      background: radial-gradient(ellipse at 50% 30%, rgba(0, 255, 110, 0.35) 0%, rgba(0, 200, 100, 0.15) 40%, transparent 70%);
+      top: -15%;
+      left: -5%;
+      animation: aurora-drift-1 12s ease-in-out infinite alternate;
     }
 
-    .aurora-blob--3 {
+    /* Purple/violet band — upper aurora edge */
+    .aurora-blob--2 {
       width: 700px;
-      height: 350px;
-      background: radial-gradient(ellipse, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
-      bottom: 10%;
-      left: 20%;
+      height: 450px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(140, 60, 255, 0.30) 0%, rgba(100, 30, 200, 0.12) 45%, transparent 70%);
+      top: -5%;
+      right: -5%;
+      animation: aurora-drift-2 15s ease-in-out infinite alternate;
     }
 
-    .aurora-blob--4 {
-      width: 400px;
+    /* Cyan/teal ribbon — mid aurora */
+    .aurora-blob--3 {
+      width: 1000px;
       height: 400px;
-      background: radial-gradient(ellipse, rgba(255, 110, 199, 0.07) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse at 50% 35%, rgba(0, 230, 255, 0.28) 0%, rgba(0, 180, 220, 0.10) 45%, transparent 70%);
+      top: 15%;
+      left: 10%;
+      animation: aurora-drift-3 18s ease-in-out infinite alternate;
     }
 
+    /* Pink/magenta accent — rare aurora color */
+    .aurora-blob--4 {
+      width: 600px;
+      height: 350px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(255, 80, 180, 0.22) 0%, rgba(200, 50, 150, 0.08) 45%, transparent 70%);
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      animation: aurora-drift-4 14s ease-in-out infinite alternate;
+    }
+
+    /* Secondary green glow — fills gaps */
     .aurora-blob--5 {
-      width: 550px;
-      height: 300px;
-      background: radial-gradient(ellipse, rgba(72, 255, 200, 0.09) 0%, transparent 70%);
-      top: 60%;
-      right: 5%;
+      width: 800px;
+      height: 380px;
+      background: radial-gradient(ellipse at 50% 30%, rgba(50, 255, 170, 0.25) 0%, rgba(30, 200, 140, 0.10) 40%, transparent 70%);
+      top: 25%;
+      right: 0%;
+      animation: aurora-drift-5 16s ease-in-out infinite alternate;
+    }
+
+    /* ── Aurora keyframe animations ──────────────────── */
+    @keyframes aurora-drift-1 {
+      0%   { transform: translateX(0) translateY(0) scaleX(1) skewX(0deg); }
+      25%  { transform: translateX(40px) translateY(15px) scaleX(1.08) skewX(2deg); }
+      50%  { transform: translateX(-20px) translateY(-10px) scaleX(0.95) skewX(-1deg); }
+      75%  { transform: translateX(30px) translateY(20px) scaleX(1.05) skewX(1.5deg); }
+      100% { transform: translateX(-30px) translateY(-5px) scaleX(1.1) skewX(-2deg); }
+    }
+
+    @keyframes aurora-drift-2 {
+      0%   { transform: translateX(0) translateY(0) scaleY(1) skewX(0deg); }
+      30%  { transform: translateX(-50px) translateY(20px) scaleY(1.1) skewX(-3deg); }
+      60%  { transform: translateX(30px) translateY(-15px) scaleY(0.9) skewX(2deg); }
+      100% { transform: translateX(-20px) translateY(10px) scaleY(1.05) skewX(-1deg); }
+    }
+
+    @keyframes aurora-drift-3 {
+      0%   { transform: translateX(0) translateY(0) scaleX(1) rotate(0deg); }
+      33%  { transform: translateX(60px) translateY(-20px) scaleX(1.1) rotate(1deg); }
+      66%  { transform: translateX(-40px) translateY(15px) scaleX(0.92) rotate(-1deg); }
+      100% { transform: translateX(20px) translateY(-10px) scaleX(1.06) rotate(0.5deg); }
+    }
+
+    @keyframes aurora-drift-4 {
+      0%   { transform: translate(-50%, 0) scaleX(1) skewX(0deg); }
+      40%  { transform: translate(calc(-50% + 35px), 15px) scaleX(1.12) skewX(3deg); }
+      70%  { transform: translate(calc(-50% - 25px), -10px) scaleX(0.93) skewX(-2deg); }
+      100% { transform: translate(calc(-50% + 15px), 5px) scaleX(1.07) skewX(1deg); }
+    }
+
+    @keyframes aurora-drift-5 {
+      0%   { transform: translateX(0) translateY(0) scaleX(1); }
+      35%  { transform: translateX(-45px) translateY(20px) scaleX(1.08); }
+      65%  { transform: translateX(35px) translateY(-15px) scaleX(0.94); }
+      100% { transform: translateX(-15px) translateY(8px) scaleX(1.05); }
     }
 
     /* ── Hero (sticky) ────────────────────────────── */
@@ -674,21 +722,22 @@
     }
 
     /* ── Aurora: animate blobs based on scroll ─────── */
-    const auroraBase = 0.06 + p * 0.15;
-    auroraBlobs[0].style.opacity = auroraBase + Math.sin(p * Math.PI * 2) * 0.04;
-    auroraBlobs[0].style.transform = `translate(${Math.sin(p * Math.PI * 3) * 40}px, ${Math.cos(p * Math.PI * 2) * 30}px)`;
+    const auroraBase = 0.18 + p * 0.35;
 
-    auroraBlobs[1].style.opacity = auroraBase + Math.sin(p * Math.PI * 2 + 1) * 0.04;
-    auroraBlobs[1].style.transform = `translate(${Math.cos(p * Math.PI * 2.5) * 50}px, ${Math.sin(p * Math.PI * 3) * 35}px)`;
+    /* Green curtain — slow wave with vertical shimmer */
+    auroraBlobs[0].style.opacity = auroraBase + Math.sin(p * Math.PI * 3) * 0.10;
 
-    auroraBlobs[2].style.opacity = auroraBase * 0.8 + Math.sin(p * Math.PI * 2 + 2) * 0.03;
-    auroraBlobs[2].style.transform = `translate(${Math.sin(p * Math.PI * 2) * 30}px, ${Math.cos(p * Math.PI * 2.5) * 40}px)`;
+    /* Purple band — phase-shifted pulse */
+    auroraBlobs[1].style.opacity = auroraBase * 0.85 + Math.sin(p * Math.PI * 2.5 + 1.2) * 0.12;
 
-    auroraBlobs[3].style.opacity = auroraBase * 0.6 + Math.sin(p * Math.PI * 3 + 0.5) * 0.03;
-    auroraBlobs[3].style.transform = `translate(${-50 + Math.cos(p * Math.PI * 2) * 3}%, ${-50 + Math.sin(p * Math.PI * 2) * 3}%)`;
+    /* Cyan ribbon — broad undulation */
+    auroraBlobs[2].style.opacity = auroraBase * 0.9 + Math.sin(p * Math.PI * 2 + 2.4) * 0.08;
 
-    auroraBlobs[4].style.opacity = auroraBase * 0.7 + Math.cos(p * Math.PI * 2 + 1.5) * 0.04;
-    auroraBlobs[4].style.transform = `translate(${Math.cos(p * Math.PI * 3) * 45}px, ${Math.sin(p * Math.PI * 2) * 25}px)`;
+    /* Pink accent — subtle flicker */
+    auroraBlobs[3].style.opacity = auroraBase * 0.65 + Math.sin(p * Math.PI * 4 + 0.8) * 0.10;
+
+    /* Secondary green — counter-phase fill */
+    auroraBlobs[4].style.opacity = auroraBase * 0.8 + Math.cos(p * Math.PI * 3 + 1.8) * 0.09;
 
     /* ── Social links: show/hide at scroll ranges ──── */
     let githubVisible = false;
