@@ -889,18 +889,33 @@
     { text: "Minimize the cognitive load that a team has to deal with. Limit the size of the software and its complexity.", author: "Matthew Skelton & Manuel Pais, \u201CTeam Topologies\u201D (2019)" },
   ];
 
-  /* Shuffle quotes for variety on each load */
-  for (let i = quotes.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [quotes[i], quotes[j]] = [quotes[j], quotes[i]];
-  }
-
-  let currentQuoteIndex = 0;
-  let quoteVisible = false;
+  const shownQuoteIndices = new Set();
+  let currentCycleQueue = [];
   let quoteCycleTimer = null;
   let carouselActive = false;
 
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function buildCycleQueue() {
+    const available = [];
+    for (let i = 0; i < quotes.length; i++) {
+      if (!shownQuoteIndices.has(i)) available.push(i);
+    }
+    if (available.length === 0) {
+      shownQuoteIndices.clear();
+      for (let i = 0; i < quotes.length; i++) available.push(i);
+    }
+    return shuffleArray(available);
+  }
+
   function showQuote(index) {
+    shownQuoteIndices.add(index);
     quoteTextEl.classList.remove("visible");
     setTimeout(() => {
       quoteTextEl.textContent = "\u201C" + quotes[index].text + "\u201D";
@@ -910,14 +925,17 @@
   }
 
   function cycleQuote() {
-    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-    showQuote(currentQuoteIndex);
+    if (currentCycleQueue.length === 0) {
+      currentCycleQueue = buildCycleQueue();
+    }
+    showQuote(currentCycleQueue.shift());
   }
 
   function startQuoteCycle() {
     if (carouselActive) return;
     carouselActive = true;
-    showQuote(currentQuoteIndex);
+    currentCycleQueue = buildCycleQueue();
+    showQuote(currentCycleQueue.shift());
     quoteCycleTimer = setInterval(cycleQuote, 7000);
   }
 
