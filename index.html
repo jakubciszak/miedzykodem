@@ -601,7 +601,7 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 4;
-      max-width: 640px;
+      max-width: 800px;
       width: 88%;
       text-align: center;
       pointer-events: none;
@@ -619,7 +619,7 @@
     }
 
     .quote-text {
-      font-size: clamp(0.82rem, 1.6vw, 0.95rem);
+      font-size: clamp(0.95rem, 2vw, 1.25rem);
       font-weight: 300;
       line-height: 1.65;
       color: rgba(255, 255, 255, 0.50);
@@ -634,12 +634,82 @@
     }
 
     .quote-author {
-      font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+      font-size: clamp(0.78rem, 1.4vw, 0.95rem);
       font-weight: 300;
       color: rgba(255, 255, 255, 0.30);
       margin-top: 0.7rem;
       letter-spacing: 0.04em;
       font-style: normal;
+    }
+
+    /* ── Large screens ───────────────────────────────── */
+    @media (min-width: 1200px) {
+      .aurora-blob--1 { width: min(70vw, 1400px); height: min(40vw, 750px); }
+      .aurora-blob--2 { width: min(55vw, 1100px); height: min(35vw, 650px); }
+      .aurora-blob--3 { width: min(75vw, 1500px); height: min(32vw, 600px); }
+      .aurora-blob--4 { width: min(48vw, 950px);  height: min(28vw, 550px); }
+      .aurora-blob--5 { width: min(62vw, 1200px); height: min(30vw, 580px); }
+
+      .grid-container { width: min(60vw, 900px); }
+      .wave-container { height: 280px; }
+      .orbit-container { width: min(50vw, 600px); }
+      .converge-container { width: min(55vw, 700px); }
+
+      .quote-inner { padding: 1.6rem 2.2rem; }
+    }
+
+    /* ── Extra-large screens (2K+) ───────────────────── */
+    @media (min-width: 1920px) {
+      .aurora-blob--1 { width: min(65vw, 1800px); height: min(38vw, 900px); }
+      .aurora-blob--2 { width: min(50vw, 1400px); height: min(32vw, 800px); }
+      .aurora-blob--3 { width: min(70vw, 1900px); height: min(30vw, 750px); }
+      .aurora-blob--4 { width: min(45vw, 1200px); height: min(26vw, 700px); }
+      .aurora-blob--5 { width: min(58vw, 1500px); height: min(28vw, 720px); }
+
+      .grid-container { width: min(50vw, 1100px); }
+      .wave-container { height: 350px; gap: 6px; }
+      .wave-bar { width: 4px; }
+      .orbit-container { width: min(40vw, 800px); }
+      .converge-container { width: min(45vw, 900px); }
+
+      .social-links--left  { bottom: 4rem; left: 5rem; }
+      .social-links--right { bottom: 4rem; right: 5rem; }
+      .social-link { font-size: 0.95rem; padding: 0.6rem 1rem; }
+
+      .quotes-carousel { max-width: 920px; }
+      .quote-inner { padding: 2rem 2.8rem; }
+    }
+
+    /* ── Ultra-wide / 4K screens ─────────────────────── */
+    @media (min-width: 2560px) {
+      .title { font-size: clamp(2.5rem, 4vw, 5rem); }
+      .final .title-end { font-size: clamp(2.5rem, 4vw, 5rem); }
+
+      .aurora-blob { filter: blur(120px); }
+
+      .grid-container { width: min(45vw, 1400px); gap: 3px; }
+      .wave-container { height: 420px; gap: 8px; }
+      .wave-bar { width: 5px; }
+      .orbit-container { width: min(35vw, 1000px); }
+      .converge-container { width: min(40vw, 1100px); }
+
+      .social-links--left  { bottom: 5rem; left: 6rem; }
+      .social-links--right { bottom: 5rem; right: 6rem; }
+      .social-link { font-size: 1rem; padding: 0.7rem 1.2rem; }
+      .social-link svg { width: 22px; height: 22px; }
+
+      .quotes-carousel { max-width: 1060px; }
+      .quote-inner { padding: 2.4rem 3.2rem; border-radius: 16px; }
+    }
+
+    /* ── Small screens ───────────────────────────────── */
+    @media (max-width: 600px) {
+      .social-links--left  { bottom: 2rem; left: 1.5rem; }
+      .social-links--right { bottom: 2rem; right: 1.5rem; }
+      .social-link span { display: none; }
+
+      .quotes-carousel { bottom: 6%; width: 92%; }
+      .quote-inner { padding: 1rem 1.2rem; }
     }
   </style>
 </head>
