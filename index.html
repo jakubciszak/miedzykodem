@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Między kodem, a kulturą</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 600vh;
+    }
+
+    /* ── Hero (sticky) ────────────────────────────── */
+    .hero {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .title {
+      font-size: clamp(1.6rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      opacity: calc(1 - var(--p, 0) * 2.5);
+      transform: scale(calc(1 + var(--p, 0) * 0.15));
+      transition: opacity 0.05s, transform 0.05s;
+    }
+
+    /* ── Scroll indicator ─────────────────────────── */
+    .scroll-hint {
+      position: fixed;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: calc(1 - var(--p, 0) * 8);
+      transition: opacity 0.15s;
+      pointer-events: none;
+    }
+
+    .scroll-hint .line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-hint .line::after {
+      content: "";
+      position: absolute;
+      top: -48px;
+      left: 0;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, #fff);
+      animation: scroll-drop 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-drop {
+      0%   { top: -48px; opacity: 0; }
+      30%  { opacity: 1; }
+      100% { top: 48px; opacity: 0; }
+    }
+
+    .scroll-hint .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50%      { opacity: 0.7; transform: scale(1.5); }
+    }
+
+    /* ── Floating shapes container ────────────────── */
+    .shapes {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── Individual shape base ─────────────────────── */
+    .shape {
+      position: absolute;
+      will-change: transform, opacity;
+      transition: transform 0.1s linear, opacity 0.1s linear;
+    }
+
+    /* Shape types */
+    .shape--dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .shape--ring {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .shape--ring-lg {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .shape--line {
+      width: 60px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      transform-origin: center;
+    }
+
+    .shape--line-v {
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.15);
+      transform-origin: center;
+    }
+
+    .shape--bracket {
+      font-size: 2.5rem;
+      font-weight: 100;
+      color: rgba(255,255,255,0.1);
+      font-family: "Courier New", monospace;
+      line-height: 1;
+    }
+
+    .shape--cross {
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+    .shape--cross::before,
+    .shape--cross::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.12);
+    }
+    .shape--cross::before {
+      width: 20px; height: 1px;
+      top: 50%; left: 0;
+    }
+    .shape--cross::after {
+      width: 1px; height: 20px;
+      left: 50%; top: 0;
+    }
+
+    .shape--square {
+      width: 24px;
+      height: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Ambient float animation (each shape gets a slightly different one) */
+    .shape { animation: float 8s ease-in-out infinite alternate; }
+    .shape:nth-child(2n)  { animation-duration: 10s; animation-delay: -2s; }
+    .shape:nth-child(3n)  { animation-duration: 12s; animation-delay: -4s; }
+    .shape:nth-child(5n)  { animation-duration: 9s;  animation-delay: -1s; }
+    .shape:nth-child(7n)  { animation-duration: 11s; animation-delay: -3s; }
+
+    @keyframes float {
+      0%   { translate: 0 0; }
+      100% { translate: var(--fx, 10px) var(--fy, -12px); }
+    }
+
+    /* ── Scene overlays ───────────────────────────── */
+    .scene {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.08s;
+    }
+
+    /* Grid scene */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 2px;
+      width: min(80vw, 600px);
+      aspect-ratio: 4/3;
+    }
+
+    .grid-cell {
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 2px;
+      transition: transform 0.6s ease, opacity 0.6s ease, border-color 0.6s ease;
+    }
+
+    /* Wave scene */
+    .wave-container {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 200px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      transform-origin: center;
+      transition: height 0.3s ease;
+    }
+
+    /* Orbit scene */
+    .orbit-container {
+      position: relative;
+      width: min(60vw, 400px);
+      aspect-ratio: 1;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease, border-color 0.4s ease, opacity 0.4s ease;
+    }
+
+    .orbit-ring .pip {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Converge scene */
+    .converge-container {
+      position: relative;
+      width: min(70vw, 500px);
+      aspect-ratio: 1;
+    }
+
+    .converge-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    /* ── Final title ──────────────────────────────── */
+    .final {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.08s;
+    }
+
+    .final .title-end {
+      font-size: clamp(1.6rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero title -->
+  <div class="hero">
+    <h1 class="title">Między kodem, a kulturą</h1>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-hint">
+    <span class="line"></span>
+    <span class="dot"></span>
+  </div>
+
+  <!-- Floating background shapes -->
+  <div class="shapes">
+    <!-- Dots -->
+    <div class="shape shape--dot" style="top:12%;left:8%;  --fx:-8px; --fy:14px;"></div>
+    <div class="shape shape--dot" style="top:25%;left:85%; --fx:12px; --fy:-8px;"></div>
+    <div class="shape shape--dot" style="top:70%;left:15%; --fx:-6px; --fy:10px;"></div>
+    <div class="shape shape--dot" style="top:60%;left:90%; --fx:10px; --fy:6px;"></div>
+    <div class="shape shape--dot" style="top:40%;left:50%; --fx:-4px; --fy:-14px;"></div>
+    <div class="shape shape--dot" style="top:85%;left:70%; --fx:8px;  --fy:-10px;"></div>
+
+    <!-- Rings -->
+    <div class="shape shape--ring"    style="top:18%;left:75%; --fx:15px; --fy:-10px;"></div>
+    <div class="shape shape--ring"    style="top:72%;left:25%; --fx:-10px;--fy:15px;"></div>
+    <div class="shape shape--ring-lg" style="top:35%;left:10%; --fx:8px;  --fy:-18px;"></div>
+    <div class="shape shape--ring-lg" style="top:55%;left:82%; --fx:-12px;--fy:8px;"></div>
+
+    <!-- Lines -->
+    <div class="shape shape--line"   style="top:30%;left:65%; --fx:20px; --fy:5px;"></div>
+    <div class="shape shape--line-v" style="top:65%;left:40%; --fx:-5px; --fy:20px;"></div>
+    <div class="shape shape--line"   style="top:80%;left:55%; --fx:-15px;--fy:-8px;"></div>
+
+    <!-- Brackets (code theme) -->
+    <div class="shape shape--bracket" style="top:20%;left:22%; --fx:-12px;--fy:8px;">{</div>
+    <div class="shape shape--bracket" style="top:20%;left:78%; --fx:12px; --fy:8px;">}</div>
+
+    <!-- Crosses -->
+    <div class="shape shape--cross" style="top:45%;left:18%; --fx:6px; --fy:-16px;"></div>
+    <div class="shape shape--cross" style="top:50%;left:80%; --fx:-8px;--fy:12px;"></div>
+
+    <!-- Squares -->
+    <div class="shape shape--square" style="top:78%;left:60%; --fx:10px; --fy:-6px;"></div>
+    <div class="shape shape--square" style="top:15%;left:45%; --fx:-6px; --fy:10px;"></div>
+  </div>
+
+  <!-- Scene 1: Grid -->
+  <div class="scene scene-grid" id="sceneGrid">
+    <div class="grid-container" id="grid"></div>
+  </div>
+
+  <!-- Scene 2: Wave / Equalizer -->
+  <div class="scene scene-wave" id="sceneWave">
+    <div class="wave-container" id="wave"></div>
+  </div>
+
+  <!-- Scene 3: Orbits -->
+  <div class="scene scene-orbit" id="sceneOrbit">
+    <div class="orbit-container" id="orbits"></div>
+  </div>
+
+  <!-- Scene 4: Converge -->
+  <div class="scene scene-converge" id="sceneConverge">
+    <div class="converge-container" id="converge"></div>
+  </div>
+
+  <!-- Final title with glow -->
+  <div class="final" id="final">
+    <span class="title-end">Między kodem, a kulturą</span>
+  </div>
+
+<script>
+  /* ── Helpers ─────────────────────────────────────── */
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const ease = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+  /* Map a global progress [0,1] to a local [0,1] within [start,end] */
+  const band = (p, start, end) => clamp((p - start) / (end - start), 0, 1);
+
+  /* ── Build dynamic elements ──────────────────────── */
+
+  // Grid cells
+  const gridEl = document.getElementById("grid");
+  for (let i = 0; i < 48; i++) {
+    const cell = document.createElement("div");
+    cell.className = "grid-cell";
+    gridEl.appendChild(cell);
+  }
+  const gridCells = gridEl.querySelectorAll(".grid-cell");
+
+  // Wave bars
+  const waveEl = document.getElementById("wave");
+  const BAR_COUNT = 60;
+  for (let i = 0; i < BAR_COUNT; i++) {
+    const bar = document.createElement("div");
+    bar.className = "wave-bar";
+    waveEl.appendChild(bar);
+  }
+  const waveBars = waveEl.querySelectorAll(".wave-bar");
+
+  // Orbit rings
+  const orbitsEl = document.getElementById("orbits");
+  const RING_COUNT = 6;
+  for (let i = 0; i < RING_COUNT; i++) {
+    const ring = document.createElement("div");
+    ring.className = "orbit-ring";
+    const pip = document.createElement("div");
+    pip.className = "pip";
+    ring.appendChild(pip);
+    orbitsEl.appendChild(ring);
+  }
+  const orbitRings = orbitsEl.querySelectorAll(".orbit-ring");
+
+  // Converge dots
+  const convergeEl = document.getElementById("converge");
+  const CONVERGE_COUNT = 40;
+  const convergeAngles = [];
+  const convergeRadii = [];
+  for (let i = 0; i < CONVERGE_COUNT; i++) {
+    const dot = document.createElement("div");
+    dot.className = "converge-dot";
+    convergeEl.appendChild(dot);
+    convergeAngles.push((i / CONVERGE_COUNT) * Math.PI * 2 + Math.random() * 0.4);
+    convergeRadii.push(0.3 + Math.random() * 0.5);
+  }
+  const convergeDots = convergeEl.querySelectorAll(".converge-dot");
+
+  /* ── Shape references ────────────────────────────── */
+  const shapes = document.querySelectorAll(".shape");
+  const shapeData = Array.from(shapes).map(el => ({
+    el,
+    origTop: parseFloat(el.style.top),
+    origLeft: parseFloat(el.style.left),
+  }));
+
+  /* ── Scroll handler (rAF throttled) ─────────────── */
+  let ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  function update() {
+    ticking = false;
+    const scrollY = window.scrollY;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const p = clamp(scrollY / maxScroll, 0, 1);
+
+    document.documentElement.style.setProperty("--p", p);
+
+    /* ── Shapes: spread outward on scroll ──────────── */
+    const spread = ease(Math.min(p * 3, 1));
+    shapeData.forEach(({ el, origTop, origLeft }) => {
+      const dx = (origLeft - 50) * spread * 1.2;
+      const dy = (origTop  - 50) * spread * 1.2;
+      const rot = spread * (origLeft > 50 ? 90 : -90);
+      const sc  = 1 + spread * 0.4;
+      const op  = 1 - spread * 0.5;
+      el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${sc})`;
+      el.style.opacity = op;
+    });
+
+    /* ── Scene visibility & animation ──────────────── */
+
+    // Scene 1: Grid (p 0.15 – 0.35)
+    const g = band(p, 0.15, 0.35);
+    const gShow = g > 0 && g < 1;
+    document.getElementById("sceneGrid").style.opacity = gShow ? Math.min(g * 5, 1, (1 - g) * 5) : 0;
+    if (gShow) {
+      const gEased = ease(g);
+      gridCells.forEach((cell, i) => {
+        const row = Math.floor(i / 8);
+        const col = i % 8;
+        const dist = Math.sqrt((row - 2.5) ** 2 + (col - 3.5) ** 2) / 4;
+        const delay = dist * 0.3;
+        const cellP = clamp((gEased - delay) / (1 - delay), 0, 1);
+        const scale = 0.3 + cellP * 0.7;
+        const rotation = (1 - cellP) * 45;
+        cell.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+        cell.style.opacity = cellP;
+        cell.style.borderColor = `rgba(255,255,255,${0.06 + cellP * 0.12})`;
+      });
+    }
+
+    // Scene 2: Wave (p 0.30 – 0.55)
+    const w = band(p, 0.30, 0.55);
+    const wShow = w > 0 && w < 1;
+    document.getElementById("sceneWave").style.opacity = wShow ? Math.min(w * 5, 1, (1 - w) * 5) : 0;
+    if (wShow) {
+      waveBars.forEach((bar, i) => {
+        const phase = (i / BAR_COUNT) * Math.PI * 4 + w * Math.PI * 6;
+        const h = 20 + Math.sin(phase) * 60 * ease(Math.min(w * 2, 1));
+        bar.style.height = `${h}px`;
+        bar.style.opacity = 0.15 + Math.abs(Math.sin(phase)) * 0.35;
+      });
+    }
+
+    // Scene 3: Orbits (p 0.50 – 0.75)
+    const o = band(p, 0.50, 0.75);
+    const oShow = o > 0 && o < 1;
+    document.getElementById("sceneOrbit").style.opacity = oShow ? Math.min(o * 5, 1, (1 - o) * 5) : 0;
+    if (oShow) {
+      const oEased = ease(o);
+      orbitRings.forEach((ring, i) => {
+        const baseSize = 60 + i * 50;
+        const size = baseSize * (0.2 + oEased * 0.8);
+        ring.style.width = `${size}px`;
+        ring.style.height = `${size}px`;
+        ring.style.borderColor = `rgba(255,255,255,${0.04 + oEased * 0.1})`;
+        ring.style.opacity = oEased;
+        /* Rotate the pip */
+        const pipAngle = oEased * 360 * (1 + i * 0.5);
+        ring.style.transform = `translate(-50%, -50%) rotate(${pipAngle}deg)`;
+      });
+    }
+
+    // Scene 4: Converge (p 0.70 – 0.90)
+    const c = band(p, 0.70, 0.90);
+    const cShow = c > 0 && c < 1;
+    document.getElementById("sceneConverge").style.opacity = cShow ? Math.min(c * 5, 1, (1 - c) * 5) : 0;
+    if (cShow) {
+      const cEased = ease(c);
+      convergeDots.forEach((dot, i) => {
+        const angle = convergeAngles[i] + cEased * Math.PI;
+        const radius = convergeRadii[i] * (1 - cEased * 0.85) * 50;
+        const x = 50 + Math.cos(angle) * radius;
+        const y = 50 + Math.sin(angle) * radius;
+        dot.style.left = `${x}%`;
+        dot.style.top  = `${y}%`;
+        dot.style.opacity = 0.3 + cEased * 0.7;
+        dot.style.transform = `scale(${0.5 + cEased * 1.5})`;
+      });
+    }
+
+    // Final title (p 0.88 – 1.0)
+    const f = band(p, 0.88, 1.0);
+    document.getElementById("final").style.opacity = ease(f);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  update();
+</script>
+
+</body>
+</html>
