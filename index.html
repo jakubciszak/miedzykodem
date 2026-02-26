@@ -712,13 +712,6 @@
       top: 1.8rem;
       right: 2rem;
       z-index: 15;
-      opacity: 0;
-      transition: opacity 0.8s ease, transform 0.6s ease;
-      transform: translateY(-8px);
-      pointer-events: none;
-    }
-
-    .blog-nav.visible {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
@@ -1030,7 +1023,6 @@
 
   /* ── Blog nav element ──────────────────────────── */
   const blogNav = document.getElementById("blogNav");
-  let blogNavRevealed = false;
 
   /* ── Blog excerpts ─────────────────────────────── */
   let blogExcerpts = [];
@@ -1085,6 +1077,10 @@
       blogExcerpts = excerpts.sort((a, b) => b.slug.localeCompare(a.slug));
       if (blogExcerpts.length > 0) {
         useBlogExcerpts = true;
+        /* When fewer than 5 posts, show both excerpts and quotes alternating */
+        if (blogExcerpts.length < 5) {
+          mixedMode = true;
+        }
         /* Restart carousel if active to use blog excerpts */
         if (carouselActive) {
           stopQuoteCycle();
@@ -1160,6 +1156,9 @@
   }
 
   let blogExcerptIndex = 0;
+  /* When fewer than 5 posts, alternate between excerpts and quotes */
+  let mixedMode = false;
+  let mixedShowExcerpt = true; /* toggle: true = show excerpt, false = show quote */
 
   function showBlogExcerpt(idx) {
     quoteTextEl.classList.remove("visible");
@@ -1187,7 +1186,19 @@
   }
 
   function cycleCarousel() {
-    if (useBlogExcerpts) {
+    if (mixedMode) {
+      /* Alternate between blog excerpts and quotes */
+      if (mixedShowExcerpt) {
+        showBlogExcerpt(blogExcerptIndex);
+        blogExcerptIndex = (blogExcerptIndex + 1) % blogExcerpts.length;
+      } else {
+        if (currentCycleQueue.length === 0) {
+          currentCycleQueue = buildCycleQueue();
+        }
+        showQuote(currentCycleQueue.shift());
+      }
+      mixedShowExcerpt = !mixedShowExcerpt;
+    } else if (useBlogExcerpts) {
       showBlogExcerpt(blogExcerptIndex);
       blogExcerptIndex = (blogExcerptIndex + 1) % blogExcerpts.length;
     } else {
@@ -1202,7 +1213,13 @@
     if (carouselActive) return;
     carouselActive = true;
 
-    if (useBlogExcerpts) {
+    if (mixedMode) {
+      /* Start with a blog excerpt in mixed mode */
+      blogExcerptIndex = 0;
+      showBlogExcerpt(blogExcerptIndex);
+      blogExcerptIndex = 1 % blogExcerpts.length;
+      mixedShowExcerpt = false; /* next will be a quote */
+    } else if (useBlogExcerpts) {
       blogExcerptIndex = 0;
       showBlogExcerpt(blogExcerptIndex);
       blogExcerptIndex = 1 % blogExcerpts.length;
@@ -1346,10 +1363,6 @@
     /* Secondary green — counter-phase fill */
     auroraBlobs[4].style.opacity = auroraBase * 0.8 + Math.cos(p * Math.PI * 3 + 1.8) * 0.09;
 
-    /* ── Blog nav: appear at 3% scroll ─────────────── */
-    if (p >= 0.03) blogNavRevealed = true;
-    blogNav.classList.toggle("visible", blogNavRevealed);
-
     /* ── Social links: appear at 75% and stay permanently ── */
     if (p >= 0.75) socialLinksRevealed = true;
 
@@ -1446,7 +1459,7 @@
     const qOpacity = p < 0.06 ? 0 : p > 0.88 ? 0 : Math.min(ease(qFadeIn), 1 - ease(qFadeOut));
     quotesCarousel.style.opacity = qOpacity;
 
-    quotesCarousel.classList.toggle("has-excerpts", useBlogExcerpts);
+    quotesCarousel.classList.toggle("has-excerpts", useBlogExcerpts || mixedMode);
 
     if (qOpacity > 0.05 && !carouselActive) {
       startQuoteCycle();
