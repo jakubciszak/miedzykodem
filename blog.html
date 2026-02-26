@@ -176,6 +176,46 @@
       gap: 1.5rem;
     }
 
+    /* ── Tag filter bar ─────────────────────────────── */
+    .tag-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tag-filter-btn {
+      font-size: 0.78rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .tag-filter-btn:hover {
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .tag-filter-btn.active {
+      color: rgba(0, 255, 130, 0.8);
+      background: rgba(0, 255, 130, 0.08);
+      border-color: rgba(0, 255, 130, 0.2);
+    }
+
+    .tag-filter-btn.active:hover {
+      color: rgba(0, 255, 130, 0.95);
+      background: rgba(0, 255, 130, 0.12);
+      border-color: rgba(0, 255, 130, 0.3);
+    }
+
     .post-card {
       display: block;
       text-decoration: none;
@@ -531,7 +571,7 @@
   <nav class="nav">
     <a href="index.html" class="nav-logo">Między kodem, a kulturą</a>
     <ul class="nav-links">
-      <li><a href="index.html">Strona</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="blog.html" class="active">Blog</a></li>
     </ul>
   </nav>
@@ -652,6 +692,7 @@
     /* ── Router ──────────────────────────────────── */
     let postsCache = [];
     let postsContentCache = {};
+    let activeTags = new Set();
 
     async function loadPosts() {
       const res = await fetch("posts/posts.json");
@@ -667,18 +708,52 @@
       return md;
     }
 
+    function getAllTags() {
+      const tagSet = new Set();
+      postsCache.forEach(post => {
+        const md = postsContentCache[post.filename];
+        if (md) {
+          const parsed = parseMdContent(md);
+          parsed.tags.forEach(t => tagSet.add(t));
+        }
+      });
+      return Array.from(tagSet).sort();
+    }
+
+    function toggleTag(tag) {
+      if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
+      }
+      renderPostList();
+    }
+
     function renderPostList() {
       document.title = "Blog — Między kodem, a kulturą";
+
+      const allTags = getAllTags();
 
       let html = `
         <div class="blog-header fade-in">
           <h1>Blog</h1>
           <p>Myśli o architekturze, kulturze i ewolucji oprogramowania</p>
         </div>
-        <div class="post-list">
       `;
 
-      postsCache.forEach((post, i) => {
+      if (allTags.length > 0) {
+        html += `<div class="tag-filter-bar fade-in">`;
+        allTags.forEach(tag => {
+          const isActive = activeTags.has(tag);
+          html += `<button class="tag-filter-btn${isActive ? " active" : ""}" data-tag="${tag}">${tag}</button>`;
+        });
+        html += `</div>`;
+      }
+
+      html += `<div class="post-list">`;
+
+      let visibleIndex = 0;
+      postsCache.forEach(post => {
         const md = postsContentCache[post.filename];
         let title = post.slug.replace(/-/g, " ");
         let tags = [];
@@ -691,19 +766,33 @@
           excerpt = getExcerpt(parsed.body);
         }
 
+        if (activeTags.size > 0 && !tags.some(t => activeTags.has(t))) {
+          return;
+        }
+
         html += `
-          <a class="post-card fade-in" href="#post/${post.name}" style="animation-delay: ${i * 0.1}s">
+          <a class="post-card fade-in" href="#post/${post.name}" style="animation-delay: ${visibleIndex * 0.1}s">
             <div class="post-card-date">${post.date}</div>
             <div class="post-card-title">${title}</div>
             ${tags.length ? `<div class="post-card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>` : ""}
             ${excerpt ? `<div class="post-card-excerpt">${excerpt}</div>` : ""}
           </a>
         `;
+        visibleIndex++;
       });
+
+      if (visibleIndex === 0 && activeTags.size > 0) {
+        html += `<div class="empty-state">Brak wpisów dla wybranych tagów.</div>`;
+      }
 
       html += `</div>`;
       html += renderFooter();
       app.innerHTML = html;
+
+      /* Attach click handlers to tag filter buttons */
+      app.querySelectorAll(".tag-filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => toggleTag(btn.dataset.tag));
+      });
     }
 
     async function renderPost(name) {
