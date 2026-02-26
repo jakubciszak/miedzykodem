@@ -1,0 +1,30 @@
+/* ── Footer ──────────────────────────────────── */
+.blog-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.blog-footer a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.82rem;
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+.blog-footer a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.blog-footer svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}

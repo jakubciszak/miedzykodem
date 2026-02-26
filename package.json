@@ -1,0 +1,24 @@
+{
+  "name": "miedzykodem",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/build-posts.mjs",
+    "dev": "node scripts/build-posts.mjs && vite",
+    "build": "node scripts/build-posts.mjs && vite build && node scripts/generate-seo-pages.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.0",
+    "highlight.js": "^11.11.1",
+    "marked": "^17.0.3",
+    "marked-highlight": "^2.2.3",
+    "vite": "^6.1.0"
+  }
+}
