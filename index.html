@@ -609,6 +609,10 @@
       transition: opacity 0.8s ease;
     }
 
+    .quotes-carousel.has-excerpts {
+      pointer-events: auto;
+    }
+
     .quote-inner {
       padding: 1.2rem 1.6rem;
       border-radius: 12px;
@@ -702,6 +706,97 @@
       .quote-inner { padding: 2.4rem 3.2rem; border-radius: 16px; }
     }
 
+    /* ── Blog nav link ──────────────────────────────── */
+    .blog-nav {
+      position: fixed;
+      top: 1.8rem;
+      right: 2rem;
+      z-index: 15;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.6s ease;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+
+    .blog-nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .blog-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .blog-nav a:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .blog-nav svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Blog excerpt in carousel ────────────────── */
+    .blog-excerpt-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.3s ease;
+    }
+
+    .blog-excerpt-link:hover {
+      opacity: 0.85;
+    }
+
+    .blog-excerpt-title {
+      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+      font-style: normal;
+      letter-spacing: 0.02em;
+    }
+
+    .blog-excerpt-text {
+      font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+      font-weight: 300;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.40);
+      font-style: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .blog-excerpt-meta {
+      margin-top: 0.6rem;
+      font-size: 0.72rem;
+      color: rgba(0, 255, 130, 0.45);
+      font-style: normal;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+    }
+
     /* ── Small screens ───────────────────────────────── */
     @media (max-width: 600px) {
       .social-links--left  { bottom: 2rem; left: 1.5rem; }
@@ -710,6 +805,8 @@
 
       .quotes-carousel { bottom: 6%; width: 92%; }
       .quote-inner { padding: 1rem 1.2rem; }
+
+      .blog-nav { top: 1.2rem; right: 1.2rem; }
     }
   </style>
 </head>
@@ -820,6 +917,16 @@
     </div>
   </div>
 
+  <!-- Blog navigation link -->
+  <div class="blog-nav" id="blogNav">
+    <a href="blog.html">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+      </svg>
+      Blog
+    </a>
+  </div>
+
   <!-- Social links - GitHub (left side) -->
   <div class="social-links social-links--left" id="socialGithub">
     <a href="https://github.com/jakubciszak" target="_blank" rel="noopener noreferrer" class="social-link">
@@ -921,6 +1028,74 @@
   /* Social links appear at 75% of scroll and stay permanently */
   let socialLinksRevealed = false;
 
+  /* ── Blog nav element ──────────────────────────── */
+  const blogNav = document.getElementById("blogNav");
+  let blogNavRevealed = false;
+
+  /* ── Blog excerpts ─────────────────────────────── */
+  let blogExcerpts = [];
+  let useBlogExcerpts = false;
+
+  function parseBlogMdForExcerpt(md, filename) {
+    const lines = md.split("\n");
+    let title = "";
+    let tagsRaw = "";
+    let bodyStart = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!title && line.startsWith("# ")) {
+        title = line.replace(/^#\s+/, "");
+        bodyStart = i + 1;
+        continue;
+      }
+      if (title && line.toLowerCase().startsWith("tagi:")) {
+        tagsRaw = line.substring(5).trim();
+        bodyStart = i + 1;
+        break;
+      }
+      if (title && line !== "") break;
+    }
+
+    while (bodyStart < lines.length && lines[bodyStart].trim() === "") bodyStart++;
+    const body = lines.slice(bodyStart).join("\n");
+    const plain = body.replace(/[#*`\[\]()>_~]/g, "").trim();
+    const firstParagraph = plain.split("\n\n")[0].replace(/\n/g, " ");
+    const excerpt = firstParagraph.length > 180 ? firstParagraph.substring(0, 180) + "..." : firstParagraph;
+
+    const name = filename.replace(".md", "");
+    const dateStr = name.substring(0, 8);
+    const date = dateStr.substring(6, 8) + "." + dateStr.substring(4, 6) + "." + dateStr.substring(0, 4);
+
+    return { title, excerpt, date, slug: name };
+  }
+
+  (async function loadBlogExcerpts() {
+    try {
+      const res = await fetch("posts/posts.json");
+      const files = await res.json();
+      if (files.length === 0) return;
+
+      const excerpts = await Promise.all(files.map(async (file) => {
+        const r = await fetch("posts/" + file);
+        const md = await r.text();
+        return parseBlogMdForExcerpt(md, file);
+      }));
+
+      blogExcerpts = excerpts.sort((a, b) => b.slug.localeCompare(a.slug));
+      if (blogExcerpts.length > 0) {
+        useBlogExcerpts = true;
+        /* Restart carousel if active to use blog excerpts */
+        if (carouselActive) {
+          stopQuoteCycle();
+          startQuoteCycle();
+        }
+      }
+    } catch (e) {
+      /* Silently fall back to quotes */
+    }
+  })();
+
   /* ── Quotes carousel ────────────────────────────── */
   const quotesCarousel = document.getElementById("quotesCarousel");
   const quoteTextEl = document.getElementById("quoteText");
@@ -984,29 +1159,59 @@
     return shuffleArray(available);
   }
 
+  let blogExcerptIndex = 0;
+
+  function showBlogExcerpt(idx) {
+    quoteTextEl.classList.remove("visible");
+    setTimeout(() => {
+      const post = blogExcerpts[idx];
+      quoteTextEl.innerHTML = `<a class="blog-excerpt-link" href="blog.html#post/${post.slug}">
+        <div class="blog-excerpt-title">${post.title}</div>
+        <div class="blog-excerpt-text">${post.excerpt}</div>
+        <div class="blog-excerpt-meta">${post.date} &middot; Czytaj dalej &rarr;</div>
+      </a>`;
+      quoteAuthorEl.textContent = "";
+      quoteTextEl.classList.add("visible");
+    }, 800);
+  }
+
   function showQuote(index) {
     shownQuoteIndices.add(index);
     quoteTextEl.classList.remove("visible");
     setTimeout(() => {
+      quoteTextEl.innerHTML = "";
       quoteTextEl.textContent = "\u201C" + quotes[index].text + "\u201D";
       quoteAuthorEl.textContent = "\u2014 " + quotes[index].author;
       quoteTextEl.classList.add("visible");
     }, 800);
   }
 
-  function cycleQuote() {
-    if (currentCycleQueue.length === 0) {
-      currentCycleQueue = buildCycleQueue();
+  function cycleCarousel() {
+    if (useBlogExcerpts) {
+      showBlogExcerpt(blogExcerptIndex);
+      blogExcerptIndex = (blogExcerptIndex + 1) % blogExcerpts.length;
+    } else {
+      if (currentCycleQueue.length === 0) {
+        currentCycleQueue = buildCycleQueue();
+      }
+      showQuote(currentCycleQueue.shift());
     }
-    showQuote(currentCycleQueue.shift());
   }
 
   function startQuoteCycle() {
     if (carouselActive) return;
     carouselActive = true;
-    currentCycleQueue = buildCycleQueue();
-    showQuote(currentCycleQueue.shift());
-    quoteCycleTimer = setInterval(cycleQuote, 7000);
+
+    if (useBlogExcerpts) {
+      blogExcerptIndex = 0;
+      showBlogExcerpt(blogExcerptIndex);
+      blogExcerptIndex = 1 % blogExcerpts.length;
+    } else {
+      currentCycleQueue = buildCycleQueue();
+      showQuote(currentCycleQueue.shift());
+    }
+
+    quoteCycleTimer = setInterval(cycleCarousel, 7000);
   }
 
   function stopQuoteCycle() {
@@ -1141,6 +1346,10 @@
     /* Secondary green — counter-phase fill */
     auroraBlobs[4].style.opacity = auroraBase * 0.8 + Math.cos(p * Math.PI * 3 + 1.8) * 0.09;
 
+    /* ── Blog nav: appear at 3% scroll ─────────────── */
+    if (p >= 0.03) blogNavRevealed = true;
+    blogNav.classList.toggle("visible", blogNavRevealed);
+
     /* ── Social links: appear at 75% and stay permanently ── */
     if (p >= 0.75) socialLinksRevealed = true;
 
@@ -1236,6 +1445,8 @@
     const qFadeOut = band(p, 0.82, 0.88);
     const qOpacity = p < 0.06 ? 0 : p > 0.88 ? 0 : Math.min(ease(qFadeIn), 1 - ease(qFadeOut));
     quotesCarousel.style.opacity = qOpacity;
+
+    quotesCarousel.classList.toggle("has-excerpts", useBlogExcerpts);
 
     if (qOpacity > 0.05 && !carouselActive) {
       startQuoteCycle();
