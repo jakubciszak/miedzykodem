@@ -6,7 +6,7 @@
   <title>Blog — Między kodem, a kulturą</title>
 
   <!-- Marked.js for Markdown parsing -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
 
   <style>
     /* ── Reset & Base ─────────────────────────────── */
@@ -541,31 +541,38 @@
     <div class="loading">Ładowanie...</div>
   </div>
 
-  <!-- Marked.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <!-- Marked.js + marked-highlight extension -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@17.0.3/lib/marked.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.2.3/lib/index.umd.js"></script>
   <!-- Highlight.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <!-- Additional languages for highlight.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/shell.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/rust.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/kotlin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/shell.min.js"></script>
 
   <script>
-    /* ── Configure marked with highlight.js ──────── */
-    marked.setOptions({
-      breaks: false,
-      gfm: true,
-      highlight: function(code, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-          return hljs.highlight(code, { language: lang }).value;
+    /* ── Configure marked with marked-highlight + highlight.js ── */
+    const { Marked } = globalThis.marked;
+    const { markedHighlight } = globalThis.markedHighlight;
+
+    const markedInstance = new Marked(
+      { gfm: true, breaks: false },
+      markedHighlight({
+        emptyLangClass: "hljs",
+        langPrefix: "hljs language-",
+        highlight(code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
         }
-        return hljs.highlightAuto(code).value;
-      }
-    });
+      })
+    );
 
     /* Custom renderer for code blocks with language labels */
     const renderer = new marked.Renderer();
@@ -581,7 +588,7 @@
       const label = lang ? `<span class="code-lang-label">${lang}</span>` : "";
       return `<pre>${label}<code class="hljs language-${lang || "auto"}">${highlighted}</code></pre>`;
     };
-    marked.use({ renderer });
+    markedInstance.use({ renderer });
 
     /* ── Helpers ─────────────────────────────────── */
     const app = document.getElementById("app");
@@ -713,7 +720,7 @@
 
       document.title = `${parsed.title} — Blog`;
 
-      const renderedBody = marked.parse(parsed.body);
+      const renderedBody = markedInstance.parse(parsed.body);
 
       let html = `
         <a href="#" class="post-back fade-in">&larr; Wróć do listy</a>
