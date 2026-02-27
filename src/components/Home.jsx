@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react';
+import { useLayoutEffect, useRef, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Aurora from './Aurora';
 import postsData from '../generated/posts-data.js';
@@ -72,6 +72,12 @@ const shapesData = [
   { type: 'aurora-band', style: { top: '15%', left: '45%', '--fx': '-6px', '--fy': '10px', background: 'linear-gradient(90deg, transparent, rgba(0,200,255,0.20), transparent)' } },
 ];
 
+/* Pre-computed shape positions (mirrors vanilla version's cached shapeData) */
+const precomputedShapePositions = shapesData.map((s) => ({
+  origTop: parseFloat(s.style.top),
+  origLeft: parseFloat(s.style.left),
+}));
+
 export default function Home() {
   const tickingRef = useRef(false);
   const socialRevealedRef = useRef(false);
@@ -98,6 +104,13 @@ export default function Home() {
   const orbitsRef = useRef(null);
   const convergeRef = useRef(null);
   const shapesRef = useRef(null);
+
+  /* Cached DOM element arrays (set once in layout effect, like vanilla version) */
+  const shapeElsRef = useRef([]);
+  const gridCellsRef = useRef([]);
+  const waveBarsRef = useRef([]);
+  const orbitRingsRef = useRef([]);
+  const convergeDotsRef = useRef([]);
 
   /* Pre-computed converge data */
   const convergeData = useMemo(() => {
@@ -276,12 +289,12 @@ export default function Home() {
     if (socialLinkedinRef.current) socialLinkedinRef.current.classList.toggle('visible', socialRevealedRef.current);
 
     /* Shapes spread */
-    if (shapesRef.current) {
+    const shapeArr = shapeElsRef.current;
+    if (shapeArr.length) {
       const spread = ease(Math.min(p * 3, 1));
-      const shapeEls = shapesRef.current.querySelectorAll('.shape');
-      shapeEls.forEach((el) => {
-        const origTop = parseFloat(el.style.top);
-        const origLeft = parseFloat(el.style.left);
+      for (let i = 0; i < shapeArr.length; i++) {
+        const el = shapeArr[i];
+        const { origTop, origLeft } = precomputedShapePositions[i];
         const dx = (origLeft - 50) * spread * 1.2;
         const dy = (origTop - 50) * spread * 1.2;
         const rot = spread * (origLeft > 50 ? 90 : -90);
@@ -289,7 +302,7 @@ export default function Home() {
         const op = 1 - spread * 0.5;
         el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${sc})`;
         el.style.opacity = op;
-      });
+      }
     }
 
     /* Scene 1: Grid */
@@ -298,10 +311,11 @@ export default function Home() {
     const sceneGrid = document.getElementById('sceneGrid');
     if (sceneGrid) {
       sceneGrid.style.opacity = gShow ? Math.min(g * 5, 1, (1 - g) * 5) : 0;
-      if (gShow && gridRef.current) {
+      if (gShow) {
         const gEased = ease(g);
-        const cells = gridRef.current.querySelectorAll('.grid-cell');
-        cells.forEach((cell, i) => {
+        const cells = gridCellsRef.current;
+        for (let i = 0; i < cells.length; i++) {
+          const cell = cells[i];
           const row = Math.floor(i / 8);
           const col = i % 8;
           const dist = Math.sqrt((row - 2.5) ** 2 + (col - 3.5) ** 2) / 4;
@@ -312,7 +326,7 @@ export default function Home() {
           cell.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
           cell.style.opacity = cellP;
           cell.style.borderColor = `rgba(255,255,255,${0.06 + cellP * 0.12})`;
-        });
+        }
       }
     }
 
@@ -322,14 +336,15 @@ export default function Home() {
     const sceneWave = document.getElementById('sceneWave');
     if (sceneWave) {
       sceneWave.style.opacity = wShow ? Math.min(w * 5, 1, (1 - w) * 5) : 0;
-      if (wShow && waveRef.current) {
-        const bars = waveRef.current.querySelectorAll('.wave-bar');
-        bars.forEach((bar, i) => {
+      if (wShow) {
+        const bars = waveBarsRef.current;
+        for (let i = 0; i < bars.length; i++) {
+          const bar = bars[i];
           const phase = (i / BAR_COUNT) * Math.PI * 4 + w * Math.PI * 6;
           const h = 20 + Math.sin(phase) * 60 * ease(Math.min(w * 2, 1));
           bar.style.height = `${h}px`;
           bar.style.opacity = 0.15 + Math.abs(Math.sin(phase)) * 0.35;
-        });
+        }
       }
     }
 
@@ -339,10 +354,11 @@ export default function Home() {
     const sceneOrbit = document.getElementById('sceneOrbit');
     if (sceneOrbit) {
       sceneOrbit.style.opacity = oShow ? Math.min(o * 5, 1, (1 - o) * 5) : 0;
-      if (oShow && orbitsRef.current) {
+      if (oShow) {
         const oEased = ease(o);
-        const rings = orbitsRef.current.querySelectorAll('.orbit-ring');
-        rings.forEach((ring, i) => {
+        const rings = orbitRingsRef.current;
+        for (let i = 0; i < rings.length; i++) {
+          const ring = rings[i];
           const baseSize = 60 + i * 50;
           const size = baseSize * (0.2 + oEased * 0.8);
           ring.style.width = `${size}px`;
@@ -351,7 +367,7 @@ export default function Home() {
           ring.style.opacity = oEased;
           const pipAngle = oEased * 360 * (1 + i * 0.5);
           ring.style.transform = `translate(-50%, -50%) rotate(${pipAngle}deg)`;
-        });
+        }
       }
     }
 
@@ -361,10 +377,11 @@ export default function Home() {
     const sceneConverge = document.getElementById('sceneConverge');
     if (sceneConverge) {
       sceneConverge.style.opacity = cShow ? Math.min(c * 5, 1, (1 - c) * 5) : 0;
-      if (cShow && convergeRef.current) {
+      if (cShow) {
         const cEased = ease(c);
-        const dots = convergeRef.current.querySelectorAll('.converge-dot');
-        dots.forEach((dot, i) => {
+        const dots = convergeDotsRef.current;
+        for (let i = 0; i < dots.length; i++) {
+          const dot = dots[i];
           const angle = convergeData.angles[i] + cEased * Math.PI;
           const radius = convergeData.radii[i] * (1 - cEased * 0.85) * 50;
           const x = 50 + Math.cos(angle) * radius;
@@ -373,7 +390,7 @@ export default function Home() {
           dot.style.top = `${y}%`;
           dot.style.opacity = 0.3 + cEased * 0.7;
           dot.style.transform = `scale(${0.5 + cEased * 1.5})`;
-        });
+        }
       }
     }
 
@@ -460,8 +477,25 @@ export default function Home() {
   }, [stopAutoPlay]);
 
   /* ── Set up scroll handler and cleanup ── */
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.style.minHeight = '600vh';
+
+    /* Cache DOM element arrays once (mirrors vanilla version's top-level queries) */
+    if (shapesRef.current) {
+      shapeElsRef.current = Array.from(shapesRef.current.querySelectorAll('.shape'));
+    }
+    if (gridRef.current) {
+      gridCellsRef.current = Array.from(gridRef.current.querySelectorAll('.grid-cell'));
+    }
+    if (waveRef.current) {
+      waveBarsRef.current = Array.from(waveRef.current.querySelectorAll('.wave-bar'));
+    }
+    if (orbitsRef.current) {
+      orbitRingsRef.current = Array.from(orbitsRef.current.querySelectorAll('.orbit-ring'));
+    }
+    if (convergeRef.current) {
+      convergeDotsRef.current = Array.from(convergeRef.current.querySelectorAll('.converge-dot'));
+    }
 
     const onScroll = () => {
       if (tickingRef.current) return;
