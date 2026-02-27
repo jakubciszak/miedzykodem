@@ -98,13 +98,7 @@ function getExcerpt(body, maxLen = 200) {
 
 /* ── Main ── */
 function buildPosts() {
-  const postsJsonPath = path.join(POSTS_DIR, 'posts.json');
-  if (!fs.existsSync(postsJsonPath)) {
-    console.error('posts/posts.json not found');
-    process.exit(1);
-  }
-
-  const files = JSON.parse(fs.readFileSync(postsJsonPath, 'utf-8'));
+  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'));
   const allTags = new Set();
   const posts = [];
 
