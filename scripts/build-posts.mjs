@@ -25,20 +25,15 @@ const markedInstance = new Marked(
   })
 );
 
-/* Custom renderer for code blocks with language labels */
+/* Custom renderer for code blocks with language labels.
+   `text` is already highlighted by markedHighlight – do NOT re-highlight. */
 const renderer = {
   code({ text, lang }) {
     const language = lang || '';
-    let highlighted;
-    if (language && hljs.getLanguage(language)) {
-      highlighted = hljs.highlight(text, { language }).value;
-    } else {
-      highlighted = hljs.highlightAuto(text).value;
-    }
     const label = language
       ? `<span class="code-lang-label">${language}</span>`
       : '';
-    return `<pre>${label}<code class="hljs language-${language || 'auto'}">${highlighted}</code></pre>`;
+    return `<pre>${label}<code class="hljs language-${language || 'auto'}">${text}</code></pre>`;
   },
 };
 
