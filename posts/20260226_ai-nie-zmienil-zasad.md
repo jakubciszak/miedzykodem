@@ -14,8 +14,10 @@ Pytanie nie brzmi "czy używać AI". Brzmi: czy budujemy odpowiednią kulturę i
 
 (Tak, używam długich pauz "—", bo robiłem to jeszcze przed LLMami)
 
-[1] Barry Boehm, "Software Engineering Economics"
+---
 
-[2] Martin Fowler, "Is High Quality Software Worth the Cost?"
+#### Linki do źródeł:
 
-[3] Simon Wardley, "Wardley Maps"
+* [[1] Barry Boehm, "Software Engineering Economics"](https://www.academia.edu/108567971/B_W_Boehm_software_engineering_economi)
+* [[2] Martin Fowler, "Is High Quality Software Worth the Cost?"](https://martinfowler.com/articles/is-quality-worth-cost.html)
+* [[3] Simon Wardley, "Wardley Maps"](https://learnwardleymapping.com)
