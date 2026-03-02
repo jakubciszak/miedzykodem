@@ -88,6 +88,26 @@ function parseMdContent(md) {
   return { title, tags: parseTags(tagsRaw), body };
 }
 
+/* ── Polish typographic orphans ── */
+/* Single-letter conjunctions/prepositions (a, i, o, u, w, z) must not dangle
+   at the end of a line. We replace the space after them with a non-breaking
+   space (\u00A0) in the rendered HTML, skipping <pre> code blocks. */
+function fixOrphans(html) {
+  const codeBlocks = [];
+  let result = html.replace(/<pre[\s>][\s\S]*?<\/pre>/gi, (m) => {
+    codeBlocks.push(m);
+    return `\x00CB${codeBlocks.length - 1}\x00`;
+  });
+
+  result = result.replace(/(?<=[\s>])([aiouwz]) /gi, '$1\u00A0');
+
+  codeBlocks.forEach((block, i) => {
+    result = result.replace(`\x00CB${i}\x00`, block);
+  });
+
+  return result;
+}
+
 function getExcerpt(body, maxLen = 200) {
   const plain = body.replace(/[#*`\[\]()>_~]/g, '').trim();
   const firstParagraph = plain.split('\n\n')[0].replace(/\n/g, ' ');
@@ -107,7 +127,7 @@ function buildPosts() {
     const md = fs.readFileSync(filePath, 'utf-8');
     const meta = parseFilename(filename);
     const parsed = parseMdContent(md);
-    const htmlContent = markedInstance.parse(parsed.body);
+    const htmlContent = fixOrphans(markedInstance.parse(parsed.body));
     const excerpt = getExcerpt(parsed.body);
 
     parsed.tags.forEach((t) => allTags.add(t));
