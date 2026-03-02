@@ -1,6 +1,6 @@
 # Co jeśli AI nie zmienił zasad gry, tylko po prostu ją przyspieszył?
 
-tagi: "architektura", "AI", "ewolucja oprogramowania"
+tagi: "Kolekcja klasyki", "architektura", "AI", "ewolucja oprogramowania", "Barry Boehm", "Martin Fowler", "Simon Wardley"
 
 Boehm pokazał dekady temu, że koszt zmiany rośnie wykładniczo wraz z fazą projektu [1]. Fowler dokumentował, jak architektura rozpada się wtedy, kiedy nie patrzysz — powoli, niezauważalnie, jak rzeka podmywająca brzeg [2]. Wardley rysował mapy ewolucji komponentów od eksperymentu Pioniera przez dojrzały Produkt do Commodity [3]. Każdy z nich mówił coś innego, ale wszyscy wskazywali na jedno: ewolucja jest nieuchronna. Pytanie tylko, czy będziesz ją prowadzić świadomie.
 
