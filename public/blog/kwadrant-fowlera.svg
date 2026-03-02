@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" width="820" height="520">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="520" rx="12" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="410" y="38" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" letter-spacing="0.05em">KWADRANT DŁUGU TECHNICZNEGO FOWLERA (2009)</text>
+
+  <!-- Axis labels -->
+  <!-- X axis -->
+  <text x="270" y="75" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" filter="url(#glow)">ŚWIADOMY</text>
+  <text x="580" y="75" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" filter="url(#glow)">NIEŚWIADOMY</text>
+
+  <!-- Y axis -->
+  <text x="52" y="210" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" transform="rotate(-90 52 210)" filter="url(#glow)">LEKKOMYŚLNY</text>
+  <text x="52" y="400" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" transform="rotate(-90 52 400)" filter="url(#glow)">ROZWAŻNY</text>
+
+  <!-- Grid lines -->
+  <line x1="100" y1="90" x2="100" y2="490" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="90" x2="750" y2="90" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="750" y1="90" x2="750" y2="490" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="490" x2="750" y2="490" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <!-- Center lines -->
+  <line x1="425" y1="90" x2="425" y2="490" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="290" x2="750" y2="290" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <!-- ═══ TOP-LEFT: Lekkomyślny-Świadomy ═══ -->
+  <rect x="101" y="91" width="323" height="198" fill="rgba(255,60,60,0.06)" rx="0"/>
+  <text x="262" y="130" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="400" letter-spacing="0.04em">LEKKOMYŚLNY — ŚWIADOMY</text>
+  <text x="262" y="175" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">"Nie mamy czasu</text>
+  <text x="262" y="197" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">na projektowanie."</text>
+  <text x="262" y="240" text-anchor="middle" fill="rgba(255,100,100,0.8)" font-family="system-ui, sans-serif" font-size="12" font-weight="500">≠ DŁUG</text>
+  <text x="262" y="262" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">Niechlujstwo z premedytacją</text>
+
+  <!-- ═══ TOP-RIGHT: Lekkomyślny-Nieświadomy ═══ -->
+  <rect x="426" y="91" width="323" height="198" fill="rgba(255,60,60,0.04)" rx="0"/>
+  <text x="588" y="130" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="400" letter-spacing="0.04em">LEKKOMYŚLNY — NIEŚWIADOMY</text>
+  <text x="588" y="175" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">"Co to jest</text>
+  <text x="588" y="197" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">warstwowanie?"</text>
+  <text x="588" y="240" text-anchor="middle" fill="rgba(255,100,100,0.8)" font-family="system-ui, sans-serif" font-size="12" font-weight="500">≠ DŁUG</text>
+  <text x="588" y="262" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">Brak kompetencji</text>
+
+  <!-- ═══ BOTTOM-LEFT: Rozważny-Świadomy ═══ -->
+  <rect x="101" y="291" width="323" height="198" fill="rgba(0,255,130,0.06)" rx="0"/>
+  <text x="262" y="330" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="400" letter-spacing="0.04em">ROZWAŻNY — ŚWIADOMY</text>
+  <text x="262" y="375" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">"Musimy wypuścić teraz</text>
+  <text x="262" y="397" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">i poradzić sobie z konsekwencjami."</text>
+  <text x="262" y="440" text-anchor="middle" fill="rgba(0,255,130,0.9)" font-family="system-ui, sans-serif" font-size="12" font-weight="600" filter="url(#glow)">= PRAWDZIWY DŁUG</text>
+  <text x="262" y="462" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">Świadomy kompromis z planem spłaty</text>
+
+  <!-- ═══ BOTTOM-RIGHT: Rozważny-Nieświadomy ═══ -->
+  <rect x="426" y="291" width="323" height="198" fill="rgba(0,255,130,0.03)" rx="0"/>
+  <text x="588" y="330" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="400" letter-spacing="0.04em">ROZWAŻNY — NIEŚWIADOMY</text>
+  <text x="588" y="375" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">"Teraz wiemy, jak powinniśmy</text>
+  <text x="588" y="397" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Georgia, serif" font-size="14" font-style="italic">byli to zrobić."</text>
+  <text x="588" y="440" text-anchor="middle" fill="rgba(100,180,255,0.8)" font-family="system-ui, sans-serif" font-size="12" font-weight="500">= KOSZT UCZENIA SIĘ</text>
+  <text x="588" y="462" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">Nieunikniony efekt pogłębiania wiedzy</text>
+
+  <!-- Source note -->
+  <text x="750" y="510" text-anchor="end" fill="rgba(255,255,255,0.2)" font-family="system-ui, sans-serif" font-size="9">Na podstawie: Martin Fowler, "Technical Debt Quadrant" (2009)</text>
+</svg>

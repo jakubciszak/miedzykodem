@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 640" width="820" height="640">
+  <defs>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="640" rx="12" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="410" y="38" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" letter-spacing="0.05em">JAK AI ZMIENIA KAŻDY KWADRANT DŁUGU</text>
+
+  <!-- Axis labels -->
+  <text x="270" y="75" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" filter="url(#glow2)">ŚWIADOMY</text>
+  <text x="580" y="75" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" filter="url(#glow2)">NIEŚWIADOMY</text>
+  <text x="52" y="235" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" transform="rotate(-90 52 235)" filter="url(#glow2)">LEKKOMYŚLNY</text>
+  <text x="52" y="435" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="13" font-weight="600" letter-spacing="0.08em" transform="rotate(-90 52 435)" filter="url(#glow2)">ROZWAŻNY</text>
+
+  <!-- Grid -->
+  <line x1="100" y1="90" x2="100" y2="530" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="90" x2="750" y2="90" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="750" y1="90" x2="750" y2="530" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="530" x2="750" y2="530" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="425" y1="90" x2="425" y2="530" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="100" y1="310" x2="750" y2="310" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <!-- ═══ TOP-LEFT: Lekkomyślny-Świadomy ═══ -->
+  <rect x="101" y="91" width="323" height="218" fill="rgba(255,60,60,0.06)"/>
+  <text x="262" y="120" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10" letter-spacing="0.04em">LEKKOMYŚLNY — ŚWIADOMY</text>
+  <text x="262" y="152" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="Georgia, serif" font-size="13" font-style="italic">"Nie mamy czasu na projektowanie"</text>
+
+  <!-- AI impact -->
+  <text x="148" y="185" fill="rgba(255,180,50,0.85)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">AI wzmacnia pokusę skrótów</text>
+  <text x="148" y="210" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">Generowanie kodu jest natychmiastowe,</text>
+  <text x="148" y="226" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">więc "po co inwestować w architekturę?"</text>
+
+  <!-- Risk indicator -->
+  <rect x="116" y="252" width="293" height="38" rx="4" fill="rgba(255,80,80,0.12)" stroke="rgba(255,80,80,0.25)" stroke-width="1"/>
+  <text x="262" y="268" text-anchor="middle" fill="rgba(255,120,120,0.9)" font-family="system-ui, sans-serif" font-size="10" font-weight="500">▲ RYZYKO ROŚNIE</text>
+  <text x="262" y="283" text-anchor="middle" fill="rgba(255,120,120,0.7)" font-family="system-ui, sans-serif" font-size="9">więcej kodu = więcej skrótów</text>
+
+  <!-- ═══ TOP-RIGHT: Lekkomyślny-Nieświadomy ═══ -->
+  <rect x="426" y="91" width="323" height="218" fill="rgba(255,60,60,0.04)"/>
+  <text x="588" y="120" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10" letter-spacing="0.04em">LEKKOMYŚLNY — NIEŚWIADOMY</text>
+  <text x="588" y="152" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="Georgia, serif" font-size="13" font-style="italic">"Co to jest warstwowanie?"</text>
+
+  <!-- AI impact -->
+  <text x="462" y="185" fill="rgba(255,80,80,0.85)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">AI maskuje brak kompetencji</text>
+  <text x="462" y="210" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">Kod wygląda profesjonalnie, ale dev</text>
+  <text x="462" y="226" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">nie potrafi ocenić jego jakości</text>
+
+  <!-- Risk indicator -->
+  <rect x="441" y="252" width="293" height="38" rx="4" fill="rgba(255,40,40,0.15)" stroke="rgba(255,40,40,0.3)" stroke-width="1"/>
+  <text x="588" y="268" text-anchor="middle" fill="rgba(255,100,100,0.95)" font-family="system-ui, sans-serif" font-size="10" font-weight="500">▲▲ NAJWYŻSZE RYZYKO</text>
+  <text x="588" y="283" text-anchor="middle" fill="rgba(255,100,100,0.7)" font-family="system-ui, sans-serif" font-size="9">iluzja kompetencji</text>
+
+  <!-- ═══ BOTTOM-LEFT: Rozważny-Świadomy ═══ -->
+  <rect x="101" y="311" width="323" height="218" fill="rgba(0,255,130,0.06)"/>
+  <text x="262" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10" letter-spacing="0.04em">ROZWAŻNY — ŚWIADOMY</text>
+  <text x="262" y="372" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="Georgia, serif" font-size="13" font-style="italic">"Musimy wypuścić teraz"</text>
+
+  <!-- AI impact -->
+  <text x="148" y="405" fill="rgba(255,220,50,0.85)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">AI utrudnia świadomy kompromis</text>
+  <text x="148" y="430" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">Gdy agent generuje kod, kto decyduje</text>
+  <text x="148" y="446" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">o kompromisie? Kto planuje spłatę?</text>
+
+  <!-- Indicator -->
+  <rect x="116" y="466" width="293" height="38" rx="4" fill="rgba(255,220,50,0.08)" stroke="rgba(255,220,50,0.2)" stroke-width="1"/>
+  <text x="262" y="482" text-anchor="middle" fill="rgba(255,220,100,0.85)" font-family="system-ui, sans-serif" font-size="10" font-weight="500">◆ WYMAGA DYSCYPLINY</text>
+  <text x="262" y="497" text-anchor="middle" fill="rgba(255,220,100,0.6)" font-family="system-ui, sans-serif" font-size="9">ADRy, code review, architektura</text>
+
+  <!-- ═══ BOTTOM-RIGHT: Rozważny-Nieświadomy ═══ -->
+  <rect x="426" y="311" width="323" height="218" fill="rgba(0,255,130,0.03)"/>
+  <text x="588" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10" letter-spacing="0.04em">ROZWAŻNY — NIEŚWIADOMY</text>
+  <text x="588" y="372" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="Georgia, serif" font-size="13" font-style="italic">"Teraz wiemy, jak powinniśmy..."</text>
+
+  <!-- AI impact -->
+  <text x="462" y="405" fill="rgba(255,140,50,0.85)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">AI generuje dług natychmiast</text>
+  <text x="462" y="430" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">Agent nie ma głębokiego zrozumienia</text>
+  <text x="462" y="446" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">domeny — kod od dnia 1 niedopasowany</text>
+
+  <!-- Indicator -->
+  <rect x="441" y="466" width="293" height="38" rx="4" fill="rgba(255,140,50,0.1)" stroke="rgba(255,140,50,0.25)" stroke-width="1"/>
+  <text x="588" y="482" text-anchor="middle" fill="rgba(255,160,80,0.9)" font-family="system-ui, sans-serif" font-size="10" font-weight="500">▲ NOWA DYNAMIKA</text>
+  <text x="588" y="497" text-anchor="middle" fill="rgba(255,160,80,0.6)" font-family="system-ui, sans-serif" font-size="9">dług bez fazy uczenia się</text>
+
+  <!-- Legend -->
+  <rect x="100" y="550" width="650" height="62" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="125" y="572" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="10.5">KLUCZOWA OBSERWACJA:</text>
+  <text x="125" y="590" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">AI nie tworzy nowego typu długu — ale zmienia dynamikę, skalę</text>
+  <text x="125" y="605" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">i widoczność każdego istniejącego typu. Narzędzie wzmacnia to, co już mamy.</text>
+
+  <!-- Source -->
+  <text x="750" y="634" text-anchor="end" fill="rgba(255,255,255,0.2)" font-family="system-ui, sans-serif" font-size="9">miedzykodem.dev</text>
+</svg>
