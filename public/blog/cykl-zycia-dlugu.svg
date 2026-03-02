@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" width="820" height="480">
+  <defs>
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="480" rx="12" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="410" y="38" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="500" letter-spacing="0.05em">KUMULACJA DŁUGU TECHNICZNEGO W CYKLU ŻYCIA SYSTEMU</text>
+
+  <!-- Y axis -->
+  <line x1="100" y1="65" x2="100" y2="370" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <text x="42" y="220" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10" font-weight="400" transform="rotate(-90 42 220)">POZIOM DŁUGU TECHNICZNEGO</text>
+  <!-- Y ticks -->
+  <line x1="95" y1="100" x2="100" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="88" y="104" text-anchor="end" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">krytyczny</text>
+  <line x1="95" y1="190" x2="100" y2="190" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="88" y="194" text-anchor="end" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">wysoki</text>
+  <line x1="95" y1="280" x2="100" y2="280" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="88" y="284" text-anchor="end" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">niski</text>
+
+  <!-- X axis -->
+  <line x1="100" y1="370" x2="760" y2="370" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- Phase zones -->
+  <!-- MVP -->
+  <rect x="101" y="66" width="150" height="303" fill="rgba(0,255,130,0.03)" rx="0"/>
+  <text x="176" y="390" text-anchor="middle" fill="rgba(0,255,130,0.7)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">MVP</text>
+  <text x="176" y="405" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">Początkowy rozwój</text>
+
+  <!-- Evolution -->
+  <rect x="251" y="66" width="200" height="303" fill="rgba(255,220,50,0.03)" rx="0"/>
+  <text x="351" y="390" text-anchor="middle" fill="rgba(255,220,100,0.7)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">EWOLUCJA</text>
+  <text x="351" y="405" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">Wzrost 5 → 50 osób</text>
+
+  <!-- Servicing -->
+  <rect x="451" y="66" width="175" height="303" fill="rgba(255,140,50,0.03)" rx="0"/>
+  <text x="538" y="390" text-anchor="middle" fill="rgba(255,160,80,0.7)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">SERWISOWANIE</text>
+  <text x="538" y="405" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">Utrzymanie</text>
+
+  <!-- Sunset -->
+  <rect x="626" y="66" width="133" height="303" fill="rgba(255,60,60,0.03)" rx="0"/>
+  <text x="693" y="390" text-anchor="middle" fill="rgba(255,100,100,0.7)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">WYGASZANIE</text>
+  <text x="693" y="405" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="system-ui, sans-serif" font-size="9">Sunset</text>
+
+  <!-- Phase separators -->
+  <line x1="251" y1="66" x2="251" y2="370" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="451" y1="66" x2="451" y2="370" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="626" y1="66" x2="626" y2="370" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Traditional debt curve -->
+  <path d="M 120,340 C 180,330 230,310 280,280 C 330,250 380,210 430,175 C 480,145 540,120 600,110 C 650,105 720,108 750,115"
+        fill="none" stroke="rgba(0,255,130,0.6)" stroke-width="2.5" stroke-linecap="round" filter="url(#glow4)"/>
+
+  <!-- AI-accelerated debt curve -->
+  <path d="M 120,335 C 160,310 190,260 230,200 C 260,160 300,120 350,100 C 400,85 460,80 520,82 C 580,85 650,90 720,95"
+        fill="none" stroke="rgba(255,100,100,0.6)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8,4" filter="url(#glow4)"/>
+
+  <!-- Curve labels -->
+  <!-- Traditional -->
+  <rect x="555" y="147" width="165" height="22" rx="4" fill="rgba(0,0,0,0.6)"/>
+  <line x1="560" y1="158" x2="585" y2="158" stroke="rgba(0,255,130,0.6)" stroke-width="2.5"/>
+  <text x="593" y="163" fill="rgba(0,255,130,0.8)" font-family="system-ui, sans-serif" font-size="10.5" font-weight="400">Tradycyjny cykl życia</text>
+
+  <!-- AI -->
+  <rect x="400" y="102" width="130" height="22" rx="4" fill="rgba(0,0,0,0.6)"/>
+  <line x1="405" y1="113" x2="430" y2="113" stroke="rgba(255,100,100,0.6)" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <text x="438" y="118" fill="rgba(255,120,120,0.8)" font-family="system-ui, sans-serif" font-size="10.5" font-weight="400">Z agentami AI</text>
+
+  <!-- Annotations -->
+  <!-- MVP annotation -->
+  <text x="140" y="290" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">Rozważny-</text>
+  <text x="140" y="302" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">świadomy</text>
+
+  <!-- Evolution annotation -->
+  <text x="290" y="240" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">Wszystkie 4 typy</text>
+  <text x="290" y="252" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">jednocześnie</text>
+
+  <!-- AI annotation -->
+  <text x="200" y="175" fill="rgba(255,150,150,0.5)" font-family="system-ui, sans-serif" font-size="9">Faza ewolucji</text>
+  <text x="200" y="187" fill="rgba(255,150,150,0.5)" font-family="system-ui, sans-serif" font-size="9">znika — system</text>
+  <text x="200" y="199" fill="rgba(255,150,150,0.5)" font-family="system-ui, sans-serif" font-size="9">trafia na OIOM</text>
+
+  <!-- Bottom insight box -->
+  <rect x="100" y="420" width="660" height="38" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="125" y="437" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="10">Tempo w jakim powstają nowe funkcjonalności jest imponujące.</text>
+  <text x="125" y="452" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="10">Tempo w jakim systemy erodują — przerażające.</text>
+
+  <!-- Source -->
+  <text x="750" y="475" text-anchor="end" fill="rgba(255,255,255,0.2)" font-family="system-ui, sans-serif" font-size="9">miedzykodem.dev</text>
+</svg>
