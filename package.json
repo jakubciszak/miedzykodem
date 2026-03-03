@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "node scripts/build-posts.mjs",
     "dev": "node scripts/build-posts.mjs && vite",
-    "build": "node scripts/build-posts.mjs && vite build && node scripts/generate-seo-pages.mjs",
+    "build": "node scripts/build-posts.mjs && vite build && node scripts/generate-seo-pages.mjs && node scripts/generate-rss.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

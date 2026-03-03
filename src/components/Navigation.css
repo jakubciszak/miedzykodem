@@ -28,6 +28,12 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -53,6 +59,20 @@
 .nav-links a.active {
   color: rgba(255, 255, 255, 0.8);
   background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-rss {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 0.3rem;
+  border-radius: 4px;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.nav-rss:hover {
+  color: rgba(255, 170, 50, 0.9);
+  background: rgba(255, 170, 50, 0.08);
 }
 
 @media (max-width: 600px) {
