@@ -88,6 +88,66 @@ function parseMdContent(md) {
   return { title, tags: parseTags(tagsRaw), body };
 }
 
+/* ── Footnote inline links ── */
+/* Finds the footnotes section at the bottom of a post, extracts URLs for each
+   [N] reference, then replaces every inline [N] in the body text with an
+   <a href> pointing directly to the source. */
+function linkFootnoteRefs(md) {
+  const footnoteSectionRe =
+    /\n---\s*\n+#{2,4}\s*(?:Źródła|Linki do źródeł)[:\s]*\n/;
+  const match = md.match(footnoteSectionRe);
+  if (!match) return md;
+
+  const splitIdx = match.index;
+  const body = md.substring(0, splitIdx);
+  const footnotes = md.substring(splitIdx);
+
+  /* Build a map: footnote number → URL */
+  const urlMap = {};
+  for (const line of footnotes.split('\n')) {
+    /* Format A (posts 1 & 2): * [[1] Description](URL) */
+    const fmtA = line.match(/\[\[(\d+)\][^\]]*\]\(([^)]+)\)/);
+    if (fmtA) {
+      urlMap[fmtA[1]] = fmtA[2];
+      continue;
+    }
+    /* Format B (post 3): [1] Citation — [text](URL) */
+    const numMatch = line.match(/^\s*\[(\d+)\]/);
+    if (numMatch) {
+      const links = [...line.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)];
+      if (links.length > 0) {
+        urlMap[numMatch[1]] = links[links.length - 1][1];
+      }
+    }
+  }
+
+  if (Object.keys(urlMap).length === 0) return md;
+
+  /* Replace [N] in body, skipping fenced code blocks */
+  let inCode = false;
+  const linked = body
+    .split('\n')
+    .map((line) => {
+      if (line.trim().startsWith('```')) {
+        inCode = !inCode;
+        return line;
+      }
+      if (inCode) return line;
+
+      return line.replace(/(?<!\[)\[(\d+)\](?!\()/g, (m, num) => {
+        const url = urlMap[num];
+        if (!url) return m;
+        return (
+          `<a href="${url}" target="_blank" rel="noopener noreferrer"` +
+          ` class="footnote-ref">[${num}]</a>`
+        );
+      });
+    })
+    .join('\n');
+
+  return linked + footnotes;
+}
+
 /* ── Polish typographic orphans ── */
 /* Single-letter conjunctions/prepositions (a, i, o, u, w, z) must not dangle
    at the end of a line. We replace the space after them with a non-breaking
@@ -127,7 +187,8 @@ function buildPosts() {
     const md = fs.readFileSync(filePath, 'utf-8');
     const meta = parseFilename(filename);
     const parsed = parseMdContent(md);
-    const htmlContent = fixOrphans(markedInstance.parse(parsed.body));
+    const bodyWithLinks = linkFootnoteRefs(parsed.body);
+    const htmlContent = fixOrphans(markedInstance.parse(bodyWithLinks));
     const excerpt = getExcerpt(parsed.body);
 
     parsed.tags.forEach((t) => allTags.add(t));

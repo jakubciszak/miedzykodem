@@ -131,6 +131,28 @@
   margin: 1.5rem 0;
 }
 
+/* ── Footnote references (inline [N] links) ──── */
+.post-body a.footnote-ref {
+  font-size: 0.78em;
+  vertical-align: super;
+  line-height: 0;
+  padding: 0 0.1em;
+  border-bottom: none;
+  color: rgba(0, 255, 130, 0.55);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.post-body a.footnote-ref:hover {
+  color: rgba(0, 255, 130, 0.95);
+  border-bottom: none;
+}
+
+.post-body a.footnote-ref::after {
+  content: "\2009↗";
+  font-size: 0.85em;
+}
+
 /* ── Inline code ─────────────────────────────── */
 .post-body code {
   font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", Consolas, monospace;
