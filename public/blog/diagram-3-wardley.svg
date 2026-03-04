@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="860" height="380" fill="url(#bg3)" rx="12"/>
+
+  <!-- Title -->
+  <text x="430" y="32" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="700">Praktyki XP w cyklu ewolucji Simona Wardleya [9]</text>
+  <text x="430" y="52" text-anchor="middle" fill="#94a3b8" font-size="11">Które praktyki są kluczowe na każdym etapie?</text>
+
+  <!-- Evolution arrow -->
+  <line x1="30" y1="80" x2="830" y2="80" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="830,77 838,80 830,83" fill="#475569"/>
+
+  <!-- Phase columns -->
+  <!-- Genesis -->
+  <rect x="30" y="90" width="195" height="260" rx="8" fill="#8b5cf6" opacity="0.05" stroke="#8b5cf6" stroke-opacity="0.15"/>
+  <text x="127" y="112" text-anchor="middle" fill="#c4b5fd" font-size="14" font-weight="700">GENESIS</text>
+  <text x="127" y="128" text-anchor="middle" fill="#64748b" font-size="10">startup · MVP</text>
+
+  <text x="45" y="155" fill="#86efac" font-size="11" font-weight="600">✓ Small releases + CI</text>
+  <text x="45" y="172" fill="#94a3b8" font-size="10">Idealny sojusz z agentem</text>
+  <text x="45" y="195" fill="#64748b" font-size="11">○ TDD mniej krytyczne</text>
+  <text x="45" y="212" fill="#94a3b8" font-size="10">Kod jest tymczasowy</text>
+
+  <rect x="45" y="232" width="165" height="22" rx="4" fill="#22c55e" opacity="0.12"/>
+  <text x="127" y="247" text-anchor="middle" fill="#86efac" font-size="10">Ryzyko agenta: NISKIE</text>
+
+  <!-- Custom-Built -->
+  <rect x="235" y="90" width="195" height="260" rx="8" fill="#3b82f6" opacity="0.05" stroke="#3b82f6" stroke-opacity="0.15"/>
+  <text x="332" y="112" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="700">CUSTOM-BUILT</text>
+  <text x="332" y="128" text-anchor="middle" fill="#64748b" font-size="10">wzrost · budowa produktu</text>
+
+  <text x="250" y="155" fill="#86efac" font-size="11" font-weight="600">✓ TDD + Pair programming</text>
+  <text x="250" y="172" fill="#94a3b8" font-size="10">Stają się kluczowe</text>
+  <text x="250" y="195" fill="#86efac" font-size="11" font-weight="600">✓ Collective ownership</text>
+  <text x="250" y="212" fill="#94a3b8" font-size="10">Zespół musi rozumieć kod</text>
+
+  <rect x="250" y="232" width="165" height="22" rx="4" fill="#f59e0b" opacity="0.15"/>
+  <text x="332" y="247" text-anchor="middle" fill="#fcd34d" font-size="10">Ryzyko agenta: ŚREDNIE</text>
+
+  <!-- Product -->
+  <rect x="440" y="90" width="195" height="260" rx="8" fill="#22c55e" opacity="0.05" stroke="#22c55e" stroke-opacity="0.15"/>
+  <text x="537" y="112" text-anchor="middle" fill="#86efac" font-size="14" font-weight="700">PRODUCT</text>
+  <text x="537" y="128" text-anchor="middle" fill="#64748b" font-size="10">dojrzałość · stabilizacja</text>
+
+  <text x="455" y="155" fill="#fcd34d" font-size="11" font-weight="600">✓ Refactoring + Standards</text>
+  <text x="455" y="172" fill="#94a3b8" font-size="10">Dominują</text>
+  <text x="455" y="195" fill="#fcd34d" font-size="11" font-weight="600">! ADR-y i dokumentacja</text>
+  <text x="455" y="212" fill="#94a3b8" font-size="10">Kluczowe dla kontekstu agenta</text>
+
+  <rect x="455" y="232" width="165" height="22" rx="4" fill="#ef4444" opacity="0.15"/>
+  <text x="537" y="247" text-anchor="middle" fill="#fca5a5" font-size="10">Ryzyko agenta: WYSOKIE</text>
+
+  <!-- Commodity -->
+  <rect x="645" y="90" width="195" height="260" rx="8" fill="#f59e0b" opacity="0.05" stroke="#f59e0b" stroke-opacity="0.15"/>
+  <text x="742" y="112" text-anchor="middle" fill="#fcd34d" font-size="14" font-weight="700">COMMODITY</text>
+  <text x="742" y="128" text-anchor="middle" fill="#64748b" font-size="10">utrzymanie · legacy</text>
+
+  <text x="660" y="155" fill="#fca5a5" font-size="11" font-weight="600">✗ Agent ograniczony</text>
+  <text x="660" y="172" fill="#94a3b8" font-size="10">Problem = wyparowana wiedza</text>
+  <text x="660" y="195" fill="#fca5a5" font-size="11" font-weight="600">↻ On-site customer + Metaphor</text>
+  <text x="660" y="212" fill="#94a3b8" font-size="10">Trzeba odkryć domenę na nowo</text>
+
+  <rect x="660" y="232" width="165" height="22" rx="4" fill="#ef4444" opacity="0.3"/>
+  <text x="742" y="247" text-anchor="middle" fill="#fee2e2" font-size="10" font-weight="600">Ryzyko agenta: KRYTYCZNE</text>
+
+  <!-- Bottom insight -->
+  <rect x="30" y="270" width="810" height="34" rx="6" fill="#3b82f6" opacity="0.06" stroke="#3b82f6" stroke-opacity="0.2"/>
+  <text x="435" y="291" text-anchor="middle" fill="#93c5fd" font-size="11">Im dalej w cyklu Wardleya → tym więcej praktyk XP jest krytycznych → tym bardziej agent potrzebuje nadzoru</text>
+
+  <!-- Boehm reminder -->
+  <rect x="30" y="315" width="810" height="34" rx="6" fill="#f59e0b" opacity="0.06" stroke="#f59e0b" stroke-opacity="0.2"/>
+  <text x="435" y="336" text-anchor="middle" fill="#fcd34d" font-size="11">Krzywa Boehma [7]: koszt naprawy rośnie wykładniczo · Agent przyspiesza pisanie — nie przyspiesza feedbacku</text>
+
+  <!-- Footer -->
+  <text x="430" y="372" text-anchor="middle" fill="#475569" font-size="9">miedzykodem.dev · Między kodem a kulturą · 2026</text>
+</svg>
