@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 480" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="860" height="480" fill="url(#bg2)" rx="12"/>
+
+  <!-- Title -->
+  <text x="430" y="32" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="700">5 praktyk XP w erze agentów AI</text>
+  <text x="430" y="52" text-anchor="middle" fill="#94a3b8" font-size="11">Co agent wzmacnia, a gdzie potrzebuje człowieka?</text>
+
+  <!-- Column headers -->
+  <text x="62" y="82" fill="#64748b" font-size="10" font-weight="600">PRAKTYKA</text>
+  <text x="290" y="82" fill="#64748b" font-size="10" font-weight="600">AGENT POTRAFI</text>
+  <text x="570" y="82" fill="#64748b" font-size="10" font-weight="600">AGENT NIE POTRAFI</text>
+  <line x1="30" y1="90" x2="830" y2="90" stroke="#334155" stroke-width="1"/>
+
+  <!-- Row 1: TDD -->
+  <rect x="30" y="100" width="800" height="62" rx="6" fill="#22c55e" opacity="0.04"/>
+  <rect x="38" y="108" width="6" height="46" rx="3" fill="#22c55e"/>
+  <text x="62" y="125" fill="#f8fafc" font-size="13" font-weight="700">TDD</text>
+  <text x="62" y="145" fill="#64748b" font-size="10">Test-Driven Development [1]</text>
+  <text x="290" y="125" fill="#86efac" font-size="11">✓ Faza Green — generuje kod</text>
+  <text x="290" y="145" fill="#86efac" font-size="11">   spełniający istniejące testy</text>
+  <text x="570" y="125" fill="#fca5a5" font-size="11">✗ Faza Red — nie rozumie domeny</text>
+  <text x="570" y="145" fill="#fca5a5" font-size="11">   na tyle, by definiować oczekiwania</text>
+
+  <!-- Row 2: Pair Programming -->
+  <rect x="30" y="172" width="800" height="62" rx="6" fill="#f59e0b" opacity="0.04"/>
+  <rect x="38" y="180" width="6" height="46" rx="3" fill="#f59e0b"/>
+  <text x="62" y="197" fill="#f8fafc" font-size="13" font-weight="700">Pair Programming</text>
+  <text x="62" y="217" fill="#64748b" font-size="10">Programowanie w parach [1]</text>
+  <text x="290" y="197" fill="#fcd34d" font-size="11">~ Nawigator dla rutyny — dostępny</text>
+  <text x="290" y="217" fill="#fcd34d" font-size="11">   24/7, nie nudzi się, nie ocenia</text>
+  <text x="570" y="197" fill="#fca5a5" font-size="11">✗ Nie pyta "po co to robimy?"</text>
+  <text x="570" y="217" fill="#fca5a5" font-size="11">   Brak kontekstu organizacyjnego</text>
+
+  <!-- Row 3: Simple Design -->
+  <rect x="30" y="244" width="800" height="62" rx="6" fill="#f59e0b" opacity="0.04"/>
+  <rect x="38" y="252" width="6" height="46" rx="3" fill="#f59e0b"/>
+  <text x="62" y="269" fill="#f8fafc" font-size="13" font-weight="700">Simple Design</text>
+  <text x="62" y="289" fill="#64748b" font-size="10">Arlow, Neustadt [6]</text>
+  <text x="290" y="269" fill="#fcd34d" font-size="11">~ Upraszcza strukturę kodu,</text>
+  <text x="290" y="289" fill="#fcd34d" font-size="11">   redukuje duplikacje</text>
+  <text x="570" y="269" fill="#fca5a5" font-size="11">✗ Nie upraszcza semantyki biznesowej</text>
+  <text x="570" y="289" fill="#fca5a5" font-size="11">   Prosty kod ≠ poprawna domena</text>
+
+  <!-- Row 4: Refactoring -->
+  <rect x="30" y="316" width="800" height="62" rx="6" fill="#f59e0b" opacity="0.04"/>
+  <rect x="38" y="324" width="6" height="46" rx="3" fill="#f59e0b"/>
+  <text x="62" y="341" fill="#f8fafc" font-size="13" font-weight="700">Refactoring</text>
+  <text x="62" y="361" fill="#64748b" font-size="10">Krzywa Boehma [7]</text>
+  <text x="290" y="341" fill="#fcd34d" font-size="11">~ Mikro-optymalizacje: pętle,</text>
+  <text x="290" y="361" fill="#fcd34d" font-size="11">   stałe, enumy — w mgnieniu oka</text>
+  <text x="570" y="341" fill="#fca5a5" font-size="11">✗ Nie wie KIEDY refaktoryzować</text>
+  <text x="570" y="361" fill="#fca5a5" font-size="11">   Decyzja ekonomiczna, nie estetyczna</text>
+
+  <!-- Row 5: Coding Standards -->
+  <rect x="30" y="388" width="800" height="62" rx="6" fill="#3b82f6" opacity="0.04"/>
+  <rect x="38" y="396" width="6" height="46" rx="3" fill="#3b82f6"/>
+  <text x="62" y="413" fill="#f8fafc" font-size="13" font-weight="700">Coding Standards</text>
+  <text x="62" y="433" fill="#64748b" font-size="10">ADR-y, AGENTS.md, SKILLS</text>
+  <text x="290" y="413" fill="#93c5fd" font-size="11">✓ Spójny kod — jeśli dasz mu</text>
+  <text x="290" y="433" fill="#93c5fd" font-size="11">   ADR-y, instrukcje, kontekst</text>
+  <text x="570" y="413" fill="#fca5a5" font-size="11">✗ Bez kontekstu: spójny z treningiem,</text>
+  <text x="570" y="433" fill="#fca5a5" font-size="11">   nie z konwencjami Twojego zespołu</text>
+
+  <!-- Footer -->
+  <text x="430" y="472" text-anchor="middle" fill="#475569" font-size="9">miedzykodem.dev · Między kodem a kulturą · 2026</text>
+</svg>
