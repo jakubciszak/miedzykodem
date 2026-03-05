@@ -18,20 +18,20 @@ Prawda jest taka, że porzucamy podstawowe narzędzia, skupiając się tylko na 
 
 ## Dwanaście praktyk XP vs AI
 
-Same zasady extreme programmingu są w mojej opinii jeszcze bardziej potrzebne w czasach agentów AI. Już tłumaczę, spójrzmy na kilka zasad XP pod kątem agent codingu/vibe codingu
+Same zasady extreme programmingu są w mojej opinii jeszcze bardziej potrzebne w czasach agentów AI. Już tłumaczę, spójrzmy na kilka zasad XP pod kątem agent codingu/vibe codingu.
 
 ### Test Driven Development
 
-TDD jest praktyką, która agent, na prawdę jest w stanie wznieść na wyższy poziom, a jednocześnie praktyką bardzo często pomijaną przy programowaniu z agentami.
-Test first opiera się na pętli dwóch faz – Red/Green. Tylko tyle i aż tyle. Agenci są fenomenalni w Green, ale ma to sens kiedy test w fazie Red jest przemyślany i zrozumiany, ale w "red" — zdefiniuj, czego oczekujesz — jest bezradny bez kontekstu biznesowego.
+TDD jest praktyką, którą agent naprawdę jest w stanie wznieść na wyższy poziom, a jednocześnie praktyką bardzo często pomijaną przy programowaniu z agentami.
+Test first opiera się na pętli dwóch faz – Red/Green. Tylko tyle i aż tyle. Agenci są fenomenalni w Green, ale ma to sens kiedy test w fazie Red jest przemyślany i zrozumiany, ale w "red" — zdefiniuj, czego oczekujesz — agenci są bezradni bez kontekstu biznesowego.
 
-Oczywiście, możemy przygotowywać opisu agentów, korzystać z narzędzi takich jak AutoGen od Microsoft [5], ale długofalowo TDD jest potęgą kiedy Ty definiujesz testy, zgłębiając przy tym domenę, a agent implementuje fazę Green. Odwrócenie tego procesu, lub pozostawienie AI pisania testów kodu, bez porządnego setupu pod pracę w trybie "AutoGen", to jakby student sam wystawiał sobie ocenę z egzaminu.
+Oczywiście, możemy przygotowywać opisy agentów, korzystać z narzędzi takich jak AutoGen od Microsoft [5], ale długofalowo TDD jest potęgą kiedy Ty definiujesz testy, zgłębiając przy tym domenę, a agent implementuje fazę Green. Odwrócenie tego procesu, lub pozostawienie AI pisania testów kodu, bez porządnego setupu pod pracę w trybie "AutoGen", to jakby student sam wystawiał sobie ocenę z egzaminu.
 
 ![TDD z agentem AI — kto odpowiada za którą fazę?](/blog/diagram-1-tdd.svg)
 
 ### Pair Programming
 
-W pewnym sensie Agent to idealny "nawigator" – nie nudzi się, nie ocenia, jest dostępny o trzeciej w nocy, ale nie powie Ci, że Twój pomysł architektoniczny jest głupi, nie zada pytania "a po co to w ogóle robimy?" — bo nie ma kontekstu organizacyjnego, który ludzie budują latami. Można minimalizować ten problem budując bazę wiedzy dla agentów, nagrywając refinmenty, dając dostęp do dokumentacji. Jednak i podstaw LLM, będzie się zgadzał, nie ma tej ludzkiej przenikliwości i ciekawości.
+W pewnym sensie Agent to idealny "nawigator" – nie nudzi się, nie ocenia, jest dostępny o trzeciej w nocy, ale nie powie Ci, że Twój pomysł architektoniczny jest głupi, nie zada pytania "a po co to w ogóle robimy?" — bo nie ma kontekstu organizacyjnego, który ludzie budują latami. Można minimalizować ten problem budując bazę wiedzy dla agentów, nagrywając refinementy, dając dostęp do dokumentacji. Jednak z podstaw LLM, będzie się zgadzał, nie ma tej ludzkiej przenikliwości i ciekawości.
 
 Myślę, że skuteczne jest podejście hybrydowe – rutynowe zadania z agentem, bardziej złożone, wymagające decyzji architektonicznych z człowiekiem.
 
@@ -42,13 +42,13 @@ Arlow i Neustadt w Enterprise Patterns [6] zauważyli, że simple design ma dwa 
 
 ### Refactoring
 
-Istnieją dwa rodzaje refactoringu – malutkie optymalizacje, zmiana zagnieżdżeń pętli na podejście funkcyjne, wyniesienie czegoś do stałej, albo enuma i takie tam. Tego typu zmiany bez sensu klepać ręcznie; agent jest wstanie zlokalizować i zmienić taki kod w mgnieniu oka.
+Istnieją dwa rodzaje refactoringu – malutkie optymalizacje, zmiana zagnieżdżeń pętli na podejście funkcyjne, wyniesienie czegoś do stałej, albo enuma i takie tam. Tego typu zmiany bez sensu klepać ręcznie; agent jest w stanie zlokalizować i zmienić taki kod w mgnieniu oka.
 
 Problem w tym, że AI sam w sobie nie wie kiedy refaktoryzować, nie rozumie, że refactor to decyzja przede wszystkim ekonomiczna, nie estetyczna. Koszt zmiany rośnie wykładniczo (krzywa Boehma [7]!). Refactoring w złym momencie, będzie drogi. Dla agenta nie ma to znaczenia, ale długoterminowo może okazać się strzałem w kolano.
 
 ### Coding standards
 
-Agent pisze spójny kod, ale spójny z czym? Z danymi treningowymi. Nie z konwencjami Twojego zespołu. Nie z ADR-ami, które spisaliście pół roku temu. Chyba, że jesteś do tego dobrze przygotowany. Utrzymywanie ADRów w repozytorium, dbanie o instrukcje AGENTS, SKILLS itp. są wstanie znacząco poprawić ten element XP w pracy z AI.
+Agent pisze spójny kod, ale spójny z czym? Z danymi treningowymi. Nie z konwencjami Twojego zespołu. Nie z ADR-ami, które spisaliście pół roku temu. Chyba, że jesteś do tego dobrze przygotowany. Utrzymywanie ADRów w repozytorium, dbanie o instrukcje AGENTS, SKILLS itp. są w stanie znacząco poprawić ten element XP w pracy z AI.
 
 ![5 praktyk XP w erze agentów AI](/blog/diagram-2-praktyki.svg)
 
@@ -72,7 +72,7 @@ Jego prace są istotne w kontekście Extreme Programming. Zdecydowanie za rzadko
 
 ### Genesis (startup, MVP):
 
-Agent + small releases + CI = idealny sojusz. Szybko prototypujesz, szybko walidujsz. TDD mniej krytyczne — kod jest tymczasowy.
+Agent + small releases + CI = idealny sojusz. Szybko prototypujesz, szybko walidujesz. TDD mniej krytyczne — kod jest tymczasowy.
 
 ### Custom-Built (wzrost):
 
