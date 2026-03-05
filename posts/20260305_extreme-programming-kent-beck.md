@@ -22,8 +22,8 @@ Same zasady extreme programmingu są w mojej opinii jeszcze bardziej potrzebne w
 
 ### Test Driven Development
 
-TDD jest praktyką, która agent naprawdę jest w stanie wznieść na wyższy poziom, a jednocześnie praktyką bardzo często pomijaną przy programowaniu z agentami.
-Test first opiera się na pętli dwóch faz – Red/Green. Tylko tyle i aż tyle. Agenci są fenomenalni w Green, ale ma to sens kiedy test w fazie Red jest przemyślany i zrozumiany, ale w "red" — zdefiniuj, czego oczekujesz — agent jest bezradny bez kontekstu biznesowego.
+TDD jest praktyką, którą agent naprawdę jest w stanie wznieść na wyższy poziom, a jednocześnie praktyką bardzo często pomijaną przy programowaniu z agentami.
+Test first opiera się na pętli dwóch faz – Red/Green. Tylko tyle i aż tyle. Agenci są fenomenalni w Green, ale ma to sens kiedy test w fazie Red jest przemyślany i zrozumiany, ale w "red" — zdefiniuj, czego oczekujesz — agenci są bezradni bez kontekstu biznesowego.
 
 Oczywiście, możemy przygotowywać opisy agentów, korzystać z narzędzi takich jak AutoGen od Microsoft [5], ale długofalowo TDD jest potęgą kiedy Ty definiujesz testy, zgłębiając przy tym domenę, a agent implementuje fazę Green. Odwrócenie tego procesu, lub pozostawienie AI pisania testów kodu, bez porządnego setupu pod pracę w trybie "AutoGen", to jakby student sam wystawiał sobie ocenę z egzaminu.
 
