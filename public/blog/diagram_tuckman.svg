@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4a5568"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f87171"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+    </marker>
+  </defs>
+
+  <!-- Tło -->
+  <rect width="900" height="480" fill="#13192b" rx="12"/>
+
+  <!-- Tytuł -->
+  <text x="450" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="#f1f5f9" letter-spacing="0.5">FAZY ZESPOŁU A STRATEGIA PRACY Z KODEM</text>
+  <text x="450" y="54" text-anchor="middle" font-size="11" fill="#64748b">na podstawie Tuckman (1965), Skelton &amp; Pais (2019), Conway (1968)</text>
+
+  <!-- ===================== BLOKI FAZ ===================== -->
+
+  <!-- FORMING -->
+  <rect x="30" y="72" width="190" height="52" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="125" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa" letter-spacing="1">FORMING</text>
+  <text x="125" y="112" text-anchor="middle" font-size="10" fill="#94a3b8">brak wspólnych konwencji</text>
+
+  <!-- STORMING -->
+  <rect x="255" y="72" width="190" height="52" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="350" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#f87171" letter-spacing="1">STORMING</text>
+  <text x="350" y="112" text-anchor="middle" font-size="10" fill="#94a3b8">konflikty personalne = techniczne</text>
+
+  <!-- NORMING -->
+  <rect x="480" y="72" width="190" height="52" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="575" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#4ade80" letter-spacing="1">NORMING</text>
+  <text x="575" y="112" text-anchor="middle" font-size="10" fill="#94a3b8">wspólne poczucie własności</text>
+
+  <!-- PERFORMING -->
+  <rect x="705" y="72" width="165" height="52" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="787" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#a78bfa" letter-spacing="1">PERFORMING</text>
+  <text x="787" y="112" text-anchor="middle" font-size="10" fill="#94a3b8">wspólny model mentalny</text>
+
+  <!-- Strzałki postępu -->
+  <line x1="222" y1="98" x2="251" y2="98" stroke="#4a5568" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <line x1="447" y1="98" x2="476" y2="98" stroke="#4a5568" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <line x1="672" y1="98" x2="701" y2="98" stroke="#4a5568" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+  <!-- Reset arc: norming/performing → forming -->
+  <path d="M 787,72 C 787,50 450,42 125,72" stroke="#f87171" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#arrow-red)"/>
+  <text x="456" y="46" text-anchor="middle" font-size="10" fill="#f87171">zmiana personalna → reset do forming</text>
+
+  <!-- Separator -->
+  <line x1="30" y1="142" x2="870" y2="142" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- ===================== PRAKTYKI ===================== -->
+
+  <!-- Nagłówek sekcji -->
+  <text x="30" y="162" font-size="10" fill="#475569" letter-spacing="0.5">PRAKTYKI DOPASOWANE DO FAZY</text>
+
+  <!-- FORMING praktyki -->
+  <rect x="30" y="172" width="190" height="200" rx="8" fill="#1a2744" stroke="#60a5fa" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="125" y="193" text-anchor="middle" font-size="10" font-weight="600" fill="#60a5fa">FORMING</text>
+  <line x1="45" y1="199" x2="205" y2="199" stroke="#60a5fa" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="45" y="217" font-size="10" fill="#cbd5e1">• CONTRIBUTING.md zamiast</text>
+  <text x="45" y="231" font-size="10" fill="#cbd5e1">  ustnej tradycji</text>
+  <text x="45" y="249" font-size="10" fill="#cbd5e1">• ADR z uzasadnieniami</text>
+  <text x="45" y="267" font-size="10" fill="#cbd5e1">• programowanie w parach</text>
+  <text x="45" y="285" font-size="10" fill="#cbd5e1">• linting zautomatyzowany</text>
+  <text x="45" y="314" font-size="10" fill="#475569" font-style="italic">przegląd kodu: drogi —</text>
+  <text x="45" y="328" font-size="10" fill="#475569" font-style="italic">każdy komentarz wymaga</text>
+  <text x="45" y="342" font-size="10" fill="#475569" font-style="italic">wyjaśniania założeń</text>
+  <text x="45" y="362" font-size="10" fill="#60a5fa" font-style="italic">cel: wspólna konwencja</text>
+
+  <!-- STORMING praktyki -->
+  <rect x="255" y="172" width="190" height="200" rx="8" fill="#2a1a1a" stroke="#f87171" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="350" y="193" text-anchor="middle" font-size="10" font-weight="600" fill="#f87171">STORMING</text>
+  <line x1="270" y1="199" x2="430" y2="199" stroke="#f87171" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="270" y="217" font-size="10" fill="#cbd5e1">• ADR z kryteriami wyboru</text>
+  <text x="270" y="235" font-size="10" fill="#cbd5e1">• spike zamiast debaty</text>
+  <text x="270" y="253" font-size="10" fill="#cbd5e1">• DoD przed sprintem</text>
+  <text x="270" y="271" font-size="10" fill="#cbd5e1">• przegląd kodu bez emocji</text>
+  <text x="270" y="314" font-size="10" fill="#475569" font-style="italic">przegląd kodu: pole bitwy</text>
+  <text x="270" y="328" font-size="10" fill="#475569" font-style="italic">lub grzeczne klepanie —</text>
+  <text x="270" y="342" font-size="10" fill="#475569" font-style="italic">w obu przypadkach traci kod</text>
+  <text x="270" y="362" font-size="10" fill="#f87171" font-style="italic">cel: obiektywizacja decyzji</text>
+
+  <!-- NORMING praktyki -->
+  <rect x="480" y="172" width="190" height="200" rx="8" fill="#132a1a" stroke="#4ade80" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="575" y="193" text-anchor="middle" font-size="10" font-weight="600" fill="#4ade80">NORMING</text>
+  <line x1="495" y1="199" x2="655" y2="199" stroke="#4ade80" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="495" y="217" font-size="10" fill="#cbd5e1">• spłata długu technicznego</text>
+  <text x="495" y="235" font-size="10" fill="#cbd5e1">• właściciele modułów</text>
+  <text x="495" y="253" font-size="10" fill="#cbd5e1">• testy jako norma</text>
+  <text x="495" y="271" font-size="10" fill="#cbd5e1">• ADR prospektywny</text>
+  <text x="495" y="314" font-size="10" fill="#475569" font-style="italic">granice kodu zaczynają</text>
+  <text x="495" y="328" font-size="10" fill="#475569" font-style="italic">pokrywać się z granicami</text>
+  <text x="495" y="342" font-size="10" fill="#475569" font-style="italic">odpowiedzialności</text>
+  <text x="495" y="362" font-size="10" fill="#4ade80" font-style="italic">cel: świadomy Conway</text>
+
+  <!-- PERFORMING praktyki -->
+  <rect x="705" y="172" width="165" height="200" rx="8" fill="#1e1a2e" stroke="#a78bfa" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="787" y="193" text-anchor="middle" font-size="10" font-weight="600" fill="#a78bfa">PERFORMING</text>
+  <line x1="720" y1="199" x2="855" y2="199" stroke="#a78bfa" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="720" y="217" font-size="10" fill="#cbd5e1">• fitness functions</text>
+  <text x="720" y="235" font-size="10" fill="#cbd5e1">• szybki refaktoring</text>
+  <text x="720" y="253" font-size="10" fill="#cbd5e1">• autonomia decyzji</text>
+  <text x="720" y="271" font-size="10" fill="#cbd5e1">• świadomy dryf granic</text>
+  <text x="720" y="314" font-size="10" fill="#475569" font-style="italic">rzadkie, cenne, kruche —</text>
+  <text x="720" y="328" font-size="10" fill="#475569" font-style="italic">rotacja tu boli</text>
+  <text x="720" y="342" font-size="10" fill="#475569" font-style="italic">nieproporcjonalnie</text>
+  <text x="720" y="362" font-size="10" fill="#a78bfa" font-style="italic">cel: podtrzymać momentum</text>
+
+  <!-- ===================== KRZYWA JAKOŚCI KODU ===================== -->
+  <!-- forming: neutralna, storming: spada, norming: rośnie, performing: wysoka -->
+  <path d="M 125,385 C 170,385 210,400 350,415 C 430,423 460,410 575,390 C 660,374 720,368 787,360"
+        stroke="#4ade80" stroke-width="1.5" fill="none" stroke-dasharray="4,3" stroke-opacity="0.6"
+        marker-end="url(#arrow-green)"/>
+  <text x="30" y="420" font-size="9.5" fill="#4ade80" fill-opacity="0.6">— — spójność kodu i decyzji</text>
+
+  <!-- Stopka -->
+  <text x="870" y="470" text-anchor="end" font-size="9" fill="#334155">miedzykodem.dev · Między kodem a kulturą · 2025</text>
+</svg>
