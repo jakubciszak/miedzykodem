@@ -30,21 +30,18 @@ export default function BlogPost() {
     const container = postBodyRef.current;
     if (!container) return;
 
-    const handleImgClick = (e) => {
-      setZoomedSrc(e.currentTarget.src);
-      setZoomedAlt(e.currentTarget.alt || '');
+    const handleClick = (e) => {
+      const img = e.target.closest('img');
+      if (img && container.contains(img)) {
+        setZoomedSrc(img.src);
+        setZoomedAlt(img.alt || '');
+      }
     };
 
-    const images = container.querySelectorAll('img');
-    images.forEach((img) => {
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', handleImgClick);
-    });
+    container.addEventListener('click', handleClick);
 
     return () => {
-      images.forEach((img) => {
-        img.removeEventListener('click', handleImgClick);
-      });
+      container.removeEventListener('click', handleClick);
     };
   }, [post]);
 
