@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Aurora from './Aurora';
 import Navigation from './Navigation';
@@ -12,6 +12,22 @@ export default function Blog() {
   useEffect(() => {
     document.title = 'Blog — Między kodem, a kulturą';
   }, []);
+
+  const [tagsExpanded, setTagsExpanded] = useState(false);
+  const [tagsOverflow, setTagsOverflow] = useState(false);
+  const tagsRef = useRef(null);
+
+  const checkOverflow = useCallback(() => {
+    const el = tagsRef.current;
+    if (!el) return;
+    setTagsOverflow(el.scrollHeight > el.clientHeight + 1);
+  }, []);
+
+  useEffect(() => {
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [checkOverflow]);
 
   const { posts, allTags } = postsData;
 
@@ -44,16 +60,29 @@ export default function Blog() {
         </div>
 
         {allTags.length > 0 && (
-          <div className="tag-filter-bar fade-in">
-            {allTags.map((tag) => (
+          <div className="tag-filter-wrapper fade-in">
+            <div
+              ref={tagsRef}
+              className={`tag-filter-bar${tagsExpanded ? ' expanded' : ''}`}
+            >
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  className={`tag-filter-btn${activeTags.has(tag) ? ' active' : ''}`}
+                  onClick={() => toggleTag(tag)}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+            {(tagsOverflow || tagsExpanded) && (
               <button
-                key={tag}
-                className={`tag-filter-btn${activeTags.has(tag) ? ' active' : ''}`}
-                onClick={() => toggleTag(tag)}
+                className="tag-filter-toggle"
+                onClick={() => setTagsExpanded((v) => !v)}
               >
-                {tag}
+                {tagsExpanded ? 'Zwiń tagi' : 'Pokaż wszystkie tagi'}
               </button>
-            ))}
+            )}
           </div>
         )}
 
