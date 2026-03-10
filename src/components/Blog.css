@@ -36,7 +36,26 @@
 
 /* ── Tag filter bar ─────────────────────────────── */
 .tag-filter-wrapper {
+  position: relative;
   margin-bottom: 2rem;
+}
+
+/* Gradient fade overlay when collapsed & overflowing */
+.tag-filter-wrapper.has-overflow::after {
+  content: '';
+  position: absolute;
+  bottom: 28px;          /* above the toggle button */
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: linear-gradient(to top, #000 0%, transparent 100%);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.tag-filter-wrapper.expanded::after {
+  opacity: 0;
 }
 
 .tag-filter-bar {
@@ -45,30 +64,64 @@
   gap: 0.5rem;
   max-height: calc(3 * (1.6rem + 0.6rem + 2px) + 2 * 0.5rem);
   overflow: hidden;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tag-filter-bar.expanded {
   max-height: 600px;
 }
 
+/* ── Fancy toggle (lines + chevron) ──────────────── */
 .tag-filter-toggle {
-  display: inline-block;
-  margin-top: 0.6rem;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.35rem 0;
   background: none;
   border: none;
   cursor: pointer;
-  font-family: inherit;
-  font-weight: 300;
-  letter-spacing: 0.03em;
-  padding: 0;
-  transition: color 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.tag-filter-toggle:hover {
-  color: rgba(255, 255, 255, 0.6);
+.toggle-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0.08) 70%,
+    transparent 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.tag-filter-toggle:hover .toggle-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 255, 130, 0.15) 30%,
+    rgba(0, 255, 130, 0.15) 70%,
+    transparent 100%
+  );
+}
+
+.toggle-chevron {
+  color: rgba(255, 255, 255, 0.25);
+  transition: color 0.3s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.tag-filter-toggle:hover .toggle-chevron {
+  color: rgba(0, 255, 130, 0.6);
+}
+
+.tag-filter-toggle.expanded .toggle-chevron {
+  transform: rotate(180deg);
 }
 
 .tag-filter-btn {

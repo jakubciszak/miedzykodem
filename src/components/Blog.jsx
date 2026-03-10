@@ -60,7 +60,7 @@ export default function Blog() {
         </div>
 
         {allTags.length > 0 && (
-          <div className="tag-filter-wrapper fade-in">
+          <div className={`tag-filter-wrapper fade-in${tagsExpanded ? ' expanded' : ''}${tagsOverflow || tagsExpanded ? ' has-overflow' : ''}`}>
             <div
               ref={tagsRef}
               className={`tag-filter-bar${tagsExpanded ? ' expanded' : ''}`}
@@ -77,10 +77,15 @@ export default function Blog() {
             </div>
             {(tagsOverflow || tagsExpanded) && (
               <button
-                className="tag-filter-toggle"
+                className={`tag-filter-toggle${tagsExpanded ? ' expanded' : ''}`}
                 onClick={() => setTagsExpanded((v) => !v)}
+                aria-label={tagsExpanded ? 'Zwiń tagi' : 'Pokaż wszystkie tagi'}
               >
-                {tagsExpanded ? 'Zwiń tagi' : 'Pokaż wszystkie tagi'}
+                <span className="toggle-line" />
+                <svg className="toggle-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+                <span className="toggle-line" />
               </button>
             )}
           </div>
