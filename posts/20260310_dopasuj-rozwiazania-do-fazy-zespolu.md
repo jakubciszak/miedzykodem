@@ -9,7 +9,7 @@ Problem może być gdzie indziej.
 
 ## Developmental Sequence in Small Groups
 
-Bruce Tuckman opisał to w 1965 roku w artykule [*"Developmental Sequence in Small Groups"*](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Dynamics/Tuckman_1965_Developmental_sequence_in_small_groups.pdf) — fazy rozwoju zespołów – forming, storming, norming, performing. Model powstał na podstawie pięćdziesięciu badań nad małymi grupami, głównie terapeutycznych i laboratoryjnych, nie zespołów scrumowych, nie zespołów produktowych, nie jednostek w skalowanym Agile. Jest opisowy, nie przepisujący — Tuckman nie mówił jak przez te fazy przejść, mówił że grupy przez nie przechodzą.
+Bruce Tuckman opisał to w 1965 roku w artykule [*"Developmental Sequence in Small Groups"*](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Dynamics/Tuckman_1965_Developmental_sequence_in_small_groups.pdf) [1] — fazy rozwoju zespołów – forming, storming, norming, performing. Model powstał na podstawie pięćdziesięciu badań nad małymi grupami, głównie terapeutycznych i laboratoryjnych, nie zespołów scrumowych, nie zespołów produktowych, nie jednostek w skalowanym Agile. Jest opisowy, nie przepisujący — Tuckman nie mówił jak przez te fazy przejść, mówił że grupy przez nie przechodzą.
 
 Czytając te badania, zacząłem zastanawiać się, jak znajomość tych faz może zmienić sposób, w jaki diagnozujemy problemy w kodzie i dobieramy do nich narzędzia.
 
@@ -29,7 +29,7 @@ Jeśli widzisz te symptomy w kodzie — zanim zaczniesz szukać rozwiązania tec
 
 Model Tuckmana nie jest liniowy. Każda znacząca zmiana — nowy członek, odejście kluczowej osoby, scalenie dwóch zespołów, zmiana tech leada — resetuje dynamikę grupy z powrotem do forming. Nie o jedną fazę wstecz. Do początku.
 
-Brooks poniekąd wyjaśnił mechanikę tego zjawiska w 1975 roku w [*The Mythical Man-Month*](https://www.oreilly.com/library/view/mythical-man-month-the/0201835959/): przy pięciu osobach masz dziesięć par komunikacyjnych, przy dziesięciu — czterdzieści pięć. Każdy nowy człowiek to nowe kanały do zbudowania, nowy kontekst do przekazania, nowa dynamika do wypracowania.
+Brooks poniekąd wyjaśnił mechanikę tego zjawiska w 1975 roku w [*The Mythical Man-Month*](https://www.oreilly.com/library/view/mythical-man-month-the/0201835959/) [3]: przy pięciu osobach masz dziesięć par komunikacyjnych, przy dziesięciu — czterdzieści pięć. Każdy nowy człowiek to nowe kanały do zbudowania, nowy kontekst do przekazania, nowa dynamika do wypracowania.
 
 To ma bezpośrednie przełożenie na to, co widzisz w kodzie po dołączeniu nowej osoby do zespołu. Nagle pojawiają się pull requesty, które łamią ustalone konwencje — nie ze złej woli, ale dlatego że nowa osoba nie zna kontekstu, który reszta ma w głowie. Nagle wracają dyskusje, które zespół miał już rozstrzygnięte. Nagle ADR-y, które leżały spokojnie w repozytorium, okazują się niewystarczające, bo opisują *co* zdecydowano, ale nie *dlaczego*.
 
@@ -37,7 +37,7 @@ To ma bezpośrednie przełożenie na to, co widzisz w kodzie po dołączeniu now
 
 ## Team Topologies daje strukturę, Tuckman daje kontekst
 
-Skelton i Pais w [*Team Topologies*](https://itrevolution.com/product/team-topologies/) traktują obciążenie kognitywne jako pierwsze ograniczenie projektowania organizacji. Cztery typy zespołów i trzy tryby interakcji dają precyzyjny język do opisywania granic — kto jest stream-aligned team, kto jest zespołem platformowym, kiedy zespoły powinny współpracować, a kiedy działać przez interfejs usługowy.
+Skelton i Pais w [*Team Topologies*](https://itrevolution.com/product/team-topologies/) [2] traktują obciążenie kognitywne jako pierwsze ograniczenie projektowania organizacji. Cztery typy zespołów i trzy tryby interakcji dają precyzyjny język do opisywania granic — kto jest stream-aligned team, kto jest zespołem platformowym, kiedy zespoły powinny współpracować, a kiedy działać przez interfejs usługowy.
 
 To bardzo użyteczny język. Ale *Team Topologies* nie powie ci, co robić, gdy Twój stream-aligned team jest w burzliwej faxie storming i doświadczony programista blokuje każdą decyzję, bo czuje, że traci wpływ po reorganizacji. Model jest mocny na projektowaniu struktury, milczy na temat dynamiki ludzi wewnątrz tej struktury.
 
@@ -82,7 +82,7 @@ I właśnie dlatego każda niepotrzebna rotacja na tym etapie boli nieproporcjon
 
 ## Prawo Conwaya domyka pętlę
 
-Conway [napisał w 1968 roku](https://www.melconway.com/Home/Committees_Paper.html): *"organizacje produkują projekty będące kopiami ich struktur komunikacyjnych."* Brzmiało to jak obserwacja. [Badania Microsoftu z 2008 roku](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2008-11.pdf) pokazały, że metryki organizacyjne — kto z kim rozmawia, jak wyglądają granice zespołów — przewidywały moduły kodu podatne na błędy lepiej niż metryki samego kodu.
+Conway [napisał w 1968 roku](https://www.melconway.com/Home/Committees_Paper.html) [4]: *"organizacje produkują projekty będące kopiami ich struktur komunikacyjnych."* Brzmiało to jak obserwacja. [Badania Microsoftu z 2008 roku](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2008-11.pdf) [5] pokazały, że metryki organizacyjne — kto z kim rozmawia, jak wyglądają granice zespołów — przewidywały moduły kodu podatne na błędy lepiej niż metryki samego kodu.
 
 Jeśli zespół, w którym jesteś, jest w storming i ma rozmyte granice odpowiedzialności, Twój kod będzie miał rozmyte granice modułów. Jeśli masz trzy podsystemy i dwa i pół zespołu, które "jakoś to ogarniają," Twój kod będzie miał dwa i pół naturalnej granicy — a przy próbie wydzielenia mikroserwisów wyjdzie to boleśnie.
 
@@ -98,8 +98,8 @@ Zanim zaczniesz wdrażać DDD, Event Storming inne ceremonię lub narzędzia —
 
 **Źródła:**
 
-1. Tuckman, B.W. (1965). [*Developmental Sequence in Small Groups*](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Dynamics/Tuckman_1965_Developmental_sequence_in_small_groups.pdf). Psychological Bulletin, 63(6), 384–399.
-2. Skelton, M., Pais, M. (2019). [*Team Topologies: Organizing Business and Technology Teams for Fast Flow*](https://itrevolution.com/product/team-topologies/). IT Revolution Press. ISBN: 978-1942788812
-3. Brooks, F.P. (1975/1995). [*The Mythical Man-Month: Essays on Software Engineering*](https://www.oreilly.com/library/view/mythical-man-month-the/0201835959/). Addison-Wesley. ISBN: 978-0201835953
-4. Conway, M.E. (1968). [*How Do Committees Invent?*](https://www.melconway.com/Home/Committees_Paper.html) Datamation, 14(4), 28–31.
-5. Nagappan, N., Murphy, B., Basili, V. (2008). [*The Influence of Organizational Structure on Software Quality*](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2008-11.pdf). ICSE 2008.
+[1] Tuckman, B.W. (1965). *Developmental Sequence in Small Groups*. Psychological Bulletin, 63(6), 384–399.
+[2] Skelton, M., Pais, M. (2019). *Team Topologies: Organizing Business and Technology Teams for Fast Flow*. IT Revolution Press. ISBN: 978-1942788812
+[3] Brooks, F.P. (1975/1995). *The Mythical Man-Month: Essays on Software Engineering*. Addison-Wesley. ISBN: 978-0201835953
+[4] Conway, M.E. (1968). *How Do Committees Invent?* Datamation, 14(4), 28–31.
+[5] Nagappan, N., Murphy, B., Basili, V. (2008). *The Influence of Organizational Structure on Software Quality*. ICSE 2008.
