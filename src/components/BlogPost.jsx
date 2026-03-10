@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Aurora from './Aurora';
 import Navigation from './Navigation';
@@ -9,6 +9,9 @@ import './BlogPost.css';
 
 export default function BlogPost() {
   const { slug } = useParams();
+  const [zoomedSrc, setZoomedSrc] = useState(null);
+  const [zoomedAlt, setZoomedAlt] = useState('');
+  const postBodyRef = useRef(null);
 
   const post = useMemo(() => {
     return postsData.posts.find((p) => p.slug === slug);
@@ -22,6 +25,39 @@ export default function BlogPost() {
     }
     window.scrollTo(0, 0);
   }, [post]);
+
+  useEffect(() => {
+    const container = postBodyRef.current;
+    if (!container) return;
+
+    const handleImgClick = (e) => {
+      setZoomedSrc(e.currentTarget.src);
+      setZoomedAlt(e.currentTarget.alt || '');
+    };
+
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', handleImgClick);
+    });
+
+    return () => {
+      images.forEach((img) => {
+        img.removeEventListener('click', handleImgClick);
+      });
+    };
+  }, [post]);
+
+  const closeZoom = useCallback(() => setZoomedSrc(null), []);
+
+  useEffect(() => {
+    if (!zoomedSrc) return;
+    const handleKey = (e) => {
+      if (e.key === 'Escape') closeZoom();
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [zoomedSrc, closeZoom]);
 
   if (!post) {
     return (
@@ -58,12 +94,19 @@ export default function BlogPost() {
 
           <div
             className="post-body"
+            ref={postBodyRef}
             dangerouslySetInnerHTML={{ __html: post.htmlContent }}
           />
         </article>
 
         <Footer />
       </div>
+
+      {zoomedSrc && (
+        <div className="img-zoom-overlay" onClick={closeZoom}>
+          <img src={zoomedSrc} alt={zoomedAlt} />
+        </div>
+      )}
     </>
   );
 }
