@@ -1,4 +1,4 @@
-# Archetyp CRM Activity — wzorzec, który znajdziesz wszędzie (i dlaczego warto go rozpoznać)
+# Archetyp CRM Activity — wzorzec, który znajdziesz (prawie) wszędzie
 
 tagi: "architektura", "archetypy", "wzorce", "CRM", "Jim Arlow", "Ilan Neustadt", "domain modeling"
 
@@ -24,13 +24,11 @@ To nie przypadek. To **archetyp**.
 
 Jeśli pracujesz w IT dłużej niż kilka lat, prawdopodobnie znasz wzorce projektowe — klasyczne Gang of Four, może wzorce taktyczne z DDD jak Aggregate, Repository czy Value Object. Archetyp to coś zupełnie innego. Działa na wyższym poziomie abstrakcji.
 
-Koncepcję archetypów biznesowych opisali Jim Arlow i Ilan Neustadt w książce *„Enterprise Patterns and MDA"* [1]. Ich teza jest prosta: w każdej domenie biznesowej powtarzają się te same fundamentalne schematy. Nie na poziomie kodu — na poziomie **pojęć biznesowych**. Nieważne czy budujesz system bankowy, sklep internetowy czy platformę medyczną — natrafisz na te same struktury: Party (kto uczestniczy w systemie), Product (co oferujesz), Order (co klient zamawia) — i właśnie Activity (co się wydarzyło). Te wzorce nie powstały wczoraj — były wielokrotnie testowane i dopracowywane w różnych kontekstach, zanim ktokolwiek z nas napisał swój pierwszy CRUD.
+Koncepcję archetypów biznesowych opisali Jim Arlow i Ilan Neustadt w książce *„Enterprise Patterns and MDA"* [1]. Ich teza jest prosta: w każdej domenie biznesowej powtarzają się te same fundamentalne schematy; nie na poziomie kodu — na poziomie **pojęć biznesowych**. Nieważne czy budujesz system bankowy, sklep internetowy czy platformę medyczną — natrafisz na te same struktury: Party (kto uczestniczy w systemie), Product (co oferujesz), Order (co klient zamawia) — i właśnie Activity (co się wydarzyło). Te wzorce nie powstały wczoraj — były wielokrotnie testowane i dopracowywane w różnych kontekstach, zanim ktokolwiek z nas napisał swój pierwszy CRUD.
 
-Jeśli szukasz analogii poza IT — Joseph Campbell opisał „podróż bohatera", schemat fabularny obecny w starożytnych mitach, filmach Lucasa i grach indie. Za każdym razem wygląda inaczej, ale struktura jest ta sama. Archetyp biznesowy działa dokładnie tak samo: konkretna implementacja różni się między domenami, ale szkielet jest uniwersalny.
+Szukając analogii poza IT — Joseph Campbell opisał „podróż bohatera", schemat fabularny obecny w starożytnych mitach, filmach Lucasa i grach indie. Za każdym razem wygląda inaczej, ale struktura jest ta sama. Archetyp biznesowy działa dokładnie tak samo: konkretna implementacja różni się między domenami, ale szkielet jest uniwersalny.
 
-I tu tkwi kluczowa różnica wobec design patternów. Wzorzec Strategy mówi Ci *jak zorganizować kod*. Archetyp Activity mówi Ci *jak zorganizować myślenie o domenie*. Jeden żyje w warstwie implementacji, drugi — w warstwie modelu biznesowego. Rozpoznanie archetypu następuje podczas rozmów z biznesem, a nie podczas code review.
-
-W praktyce to oznacza coś bardzo konkretnego: jeśli rozpoznasz archetyp na etapie analizy, masz od razu gotową mapę pytań do ekspertów domenowych. Nie odkrywasz tego po trzech sprintach, kiedy okazuje się, że model nie radzi sobie z nowym wymaganiem — wiesz z góry, jaką strukturę przygotować.
+I tu tkwi kluczowa różnica wobec design patternów. Wzorzec Strategy mówi *jak zorganizować kod*, archetyp Activity mówi *jak zorganizować myślenie o domenie*. Jeden żyje w warstwie implementacji, drugi — w warstwie modelu biznesowego. Rozpoznanie archetypu następuje podczas rozmów z biznesem, a nie podczas code review.
 
 ---
 
@@ -38,6 +36,7 @@ W praktyce to oznacza coś bardzo konkretnego: jeśli rozpoznasz archetyp na eta
 
 Archetyp Activity składa się z kilku elementów, które powtarzają się niezależnie od domeny:
 
+- **Case** – Konkretny proces biznesowy np Onboarding klienta, zgłoszenie serwisowe. Zawiera wiele aktywności.
 - **Activity** — samo zdarzenie, fakt że coś się wydarzyło. Ma swój moment w czasie (lub przedział czasowy), status i wynik.
 - **Activity Type** — klasyfikacja tego, co się stało. „Telefon wychodzący", „weryfikacja tożsamości", „naliczenie punktów" — to różne typy tej samej struktury.
 - **Party (uczestnik)** — kto był zaangażowany. Klient, konsultant, system automatyczny. Często wielu uczestników w jednej aktywności, każdy w innej roli.
