@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 520" width="860" height="520">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="rgba(0,255,130,0.5)"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="520" rx="12" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="430" y="38" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" letter-spacing="0.05em">ARCHETYP CRM ACTIVITY — FRAGMENT WZORCA</text>
+  <text x="430" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="11" letter-spacing="0.04em">Na podstawie: Arlow, Neustadt — „Enterprise Patterns and MDA" (2004)</text>
+
+  <!-- ═══ CASE (top center) ═══ -->
+  <rect x="315" y="85" width="230" height="70" rx="6" fill="rgba(100,180,255,0.08)" stroke="rgba(100,180,255,0.4)" stroke-width="1.5"/>
+  <text x="430" y="113" text-anchor="middle" fill="rgba(100,180,255,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="430" y="137" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Case</text>
+
+  <!-- ═══ ACTIVITY (center) ═══ -->
+  <rect x="315" y="215" width="230" height="90" rx="6" fill="rgba(0,255,130,0.08)" stroke="rgba(0,255,130,0.5)" stroke-width="1.5"/>
+  <text x="430" y="243" text-anchor="middle" fill="rgba(0,255,130,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="430" y="267" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Activity</text>
+  <line x1="330" y1="278" x2="530" y2="278" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="430" y="295" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">dateTime | status | outcome</text>
+
+  <!-- ═══ ACTIVITY TYPE (right of Activity) ═══ -->
+  <rect x="620" y="225" width="200" height="70" rx="6" fill="rgba(255,200,60,0.08)" stroke="rgba(255,200,60,0.4)" stroke-width="1.5"/>
+  <text x="720" y="253" text-anchor="middle" fill="rgba(255,200,60,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="720" y="277" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Activity Type</text>
+
+  <!-- ═══ PARTY (bottom left) ═══ -->
+  <rect x="40" y="390" width="200" height="90" rx="6" fill="rgba(180,130,255,0.08)" stroke="rgba(180,130,255,0.4)" stroke-width="1.5"/>
+  <text x="140" y="418" text-anchor="middle" fill="rgba(180,130,255,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="140" y="442" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Party</text>
+  <line x1="55" y1="453" x2="225" y2="453" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="140" y="470" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">klient, konsultant, system</text>
+
+  <!-- ═══ SUBJECT (bottom center) ═══ -->
+  <rect x="315" y="390" width="230" height="90" rx="6" fill="rgba(255,140,60,0.08)" stroke="rgba(255,140,60,0.4)" stroke-width="1.5"/>
+  <text x="430" y="418" text-anchor="middle" fill="rgba(255,140,60,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="430" y="442" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Subject</text>
+  <line x1="330" y1="453" x2="530" y2="453" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="430" y="470" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">zamówienie, wniosek, zgłoszenie</text>
+
+  <!-- ═══ OUTCOME (bottom right) ═══ -->
+  <rect x="620" y="390" width="200" height="90" rx="6" fill="rgba(255,100,100,0.08)" stroke="rgba(255,100,100,0.4)" stroke-width="1.5"/>
+  <text x="720" y="418" text-anchor="middle" fill="rgba(255,100,100,0.9)" font-family="system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">«archetype»</text>
+  <text x="720" y="442" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Outcome</text>
+  <line x1="635" y1="453" x2="805" y2="453" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="720" y="470" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="system-ui, sans-serif" font-size="11">sukces, odmowa, eskalacja</text>
+
+  <!-- ═══ CONNECTIONS ═══ -->
+
+  <!-- Case → Activity (composition: Case contains Activities) -->
+  <line x1="430" y1="155" x2="430" y2="215" stroke="rgba(100,180,255,0.4)" stroke-width="1.5"/>
+  <!-- Diamond for composition -->
+  <polygon points="430,155 422,167 430,179 438,167" fill="rgba(100,180,255,0.4)" stroke="rgba(100,180,255,0.4)" stroke-width="1"/>
+  <text x="448" y="192" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10">1..*</text>
+
+  <!-- Activity → Activity Type -->
+  <line x1="545" y1="260" x2="620" y2="260" stroke="rgba(255,200,60,0.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="583" y="252" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10">classifiedBy</text>
+
+  <!-- Activity → Party -->
+  <line x1="350" y1="305" x2="200" y2="390" stroke="rgba(180,130,255,0.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="248" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10">involves</text>
+  <text x="248" y="354" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="system-ui, sans-serif" font-size="10">1..*</text>
+
+  <!-- Activity → Subject -->
+  <line x1="430" y1="305" x2="430" y2="390" stroke="rgba(255,140,60,0.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="460" y="352" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10">concerns</text>
+
+  <!-- Activity → Outcome -->
+  <line x1="510" y1="305" x2="660" y2="390" stroke="rgba(255,100,100,0.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="612" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="10">produces</text>
+  <text x="612" y="354" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="system-ui, sans-serif" font-size="10">0..*</text>
+</svg>
