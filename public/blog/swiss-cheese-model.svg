@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 640" width="820" height="640">
+  <defs>
+    <filter id="glowSC">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,80,80,0.9)"/>
+    </marker>
+    <marker id="arrowDim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,255,255,0.35)"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="640" rx="12" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="410" y="38" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" letter-spacing="0.05em">MODEL SZWAJCARSKIEGO SERA — WARSTWY OBRONY W PRACY Z AI</text>
+
+  <!-- Left label: defects -->
+  <text x="60" y="120" text-anchor="middle" fill="#ff6b6b" font-family="system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="0.08em" filter="url(#glowSC)">DEFEKTY</text>
+
+  <!-- Right label: production -->
+  <text x="762" y="120" text-anchor="middle" fill="#00ff82" font-family="system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="0.08em" filter="url(#glowSC)">PRODUKCJA</text>
+
+  <!-- ═══ Slices ═══ -->
+  <!-- Slice 1: Instrukcje -->
+  <g>
+    <rect x="122" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="148" cy="200" r="13" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="148" cy="330" r="9" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="148" cy="415" r="11" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="148" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">INSTRUKCJE</text>
+    <text x="148" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">prompt, CLAUDE.md</text>
+  </g>
+
+  <!-- Slice 2: Lint -->
+  <g>
+    <rect x="226" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="252" cy="200" r="10" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="252" cy="330" r="12" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="252" cy="430" r="9" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="252" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">LINT</text>
+    <text x="252" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">statyczna analiza</text>
+  </g>
+
+  <!-- Slice 3: Hooki -->
+  <g>
+    <rect x="330" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="356" cy="200" r="11" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="356" cy="330" r="10" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="356" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">HOOKI</text>
+    <text x="356" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">bramki przy edycji</text>
+  </g>
+
+  <!-- Slice 4: Testy -->
+  <g>
+    <rect x="434" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="460" cy="200" r="12" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="460" cy="300" r="9" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="460" cy="420" r="11" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="460" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">TESTY</text>
+    <text x="460" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">unit, integracja, CI</text>
+  </g>
+
+  <!-- Slice 5: Agent review -->
+  <g>
+    <rect x="538" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="564" cy="200" r="10" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="564" cy="390" r="12" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="564" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">AGENT REVIEW</text>
+    <text x="564" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">wieloagentowy przegląd</text>
+  </g>
+
+  <!-- Slice 6: Human review -->
+  <g>
+    <rect x="642" y="140" width="52" height="330" rx="10" fill="rgba(255,214,90,0.12)" stroke="rgba(255,214,90,0.45)" stroke-width="1.5"/>
+    <circle cx="668" cy="250" r="11" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <circle cx="668" cy="200" r="8" fill="#0d1117" stroke="rgba(255,214,90,0.3)" stroke-width="1"/>
+    <text x="668" y="492" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="system-ui, sans-serif" font-size="11" font-weight="500">HUMAN REVIEW</text>
+    <text x="668" y="507" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="system-ui, sans-serif" font-size="9">osąd i kontekst</text>
+  </g>
+
+  <!-- ═══ Defect trajectories ═══ -->
+  <!-- Defect A: stopped at slice 1 (instrukcje) — no hole at y=250 -->
+  <line x1="88" y1="250" x2="116" y2="250" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" marker-end="url(#arrowDim)"/>
+  <text x="134" y="242" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="12">✕</text>
+
+  <!-- Defect B: passes hole at 415 in slice 1, stopped at slice 2 (lint) -->
+  <line x1="88" y1="415" x2="220" y2="415" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" marker-end="url(#arrowDim)"/>
+  <text x="238" y="407" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="12">✕</text>
+
+  <!-- Defect C: passes holes at 330 in slices 1-3, stopped at slice 4 (testy) -->
+  <line x1="88" y1="330" x2="428" y2="330" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowDim)"/>
+  <text x="446" y="322" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="12">✕</text>
+
+  <!-- Defect D: the one that gets through — holes aligned at y=200 -->
+  <line x1="88" y1="200" x2="732" y2="200" stroke="rgba(255,80,80,0.75)" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowRed)"/>
+
+  <!-- Legend -->
+  <rect x="100" y="545" width="620" height="62" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="125" y="567" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="10.5">KLUCZOWA OBSERWACJA:</text>
+  <text x="125" y="585" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">Każda warstwa ma dziury — i to jest w porządku. Defekt trafia na produkcję tylko wtedy,</text>
+  <text x="125" y="600" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="10">gdy dziury WSZYSTKICH warstw ułożą się w jednej linii (czerwona trajektoria).</text>
+
+  <!-- Source -->
+  <text x="750" y="632" text-anchor="end" fill="rgba(255,255,255,0.2)" font-family="system-ui, sans-serif" font-size="9">miedzykodem.dev</text>
+</svg>
