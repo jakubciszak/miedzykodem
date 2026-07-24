@@ -21,7 +21,7 @@ Konto może zostać zawieszone. Zwykły czytelnik może posiadać maksymalnie pi
 
 Pierwszy `if` dostaje rodzeństwo. Potem kuzynostwo. W końcu cała rodzina spotyka się w jednej metodzie i nikt nie pamięta, kto kogo zaprosił.
 
-W prezentacji "Ujarzmienie reguł" przechodziłem przez ten przykład, pokazując Specification, Strategy, Policy i archetyp Rule [1]. Każde z tych narzędzi pomaga poradzić sobie z innym rodzajem złożoności. Jest jednak jeszcze jeden krok, którego nie zdążyłem wtedy szerzej omówić: **reguła biznesowa może mieć własną tożsamość, wersję i historię, niezależną od historii kodu, który ją wykonuje**.
+Specification, Strategy, Policy i archetyp Rule pomagają poradzić sobie z różnymi rodzajami złożoności. Jest jednak jeszcze jeden krok: **reguła biznesowa może mieć własną tożsamość, wersję i historię, niezależną od historii kodu, który ją wykonuje**.
 
 ---
 
@@ -54,7 +54,7 @@ To rozróżnienie wygląda na akademickie, dopóki ktoś nie zapyta:
 
 Instrukcja sterująca nie zna odpowiedzi na żadne z tych pytań. Git pokaże, kto zmienił linię kodu i kiedy ją wdrożono, ale commit nie jest decyzją biznesową. Autor pull requesta również nie musi być właścicielem reguły. Często jest tylko ostatnią osobą w łańcuchu przekazywania informacji, który zaczął się od regulaminu, analityka, prawnika albo rozmowy na Teamsach, do której nikt już nie potrafi znaleźć linku.
 
-Business Rules Group nazywa reguły "pierwszoklasowymi obywatelami" modelu biznesowego i podkreśla, że powinny być oddzielone od procesów oraz procedur [2]. To ważna perspektywa: proces mówi, **co po kolei robimy**, a reguła określa, **co jest dozwolone, wymagane albo prawdziwe**.
+Business Rules Group nazywa reguły "pierwszoklasowymi obywatelami" modelu biznesowego i podkreśla, że powinny być oddzielone od procesów oraz procedur [1]. To ważna perspektywa: proces mówi, **co po kolei robimy**, a reguła określa, **co jest dozwolone, wymagane albo prawdziwe**.
 
 Kod może je łączyć w jednej metodzie. Domena niekoniecznie.
 
@@ -62,7 +62,7 @@ Kod może je łączyć w jednej metodzie. Domena niekoniecznie.
 
 ## Specification - gdy chcemy nazwać kryterium
 
-Pierwszym sposobem uporządkowania warunków jest Specification. Eric Evans i Martin Fowler opisali ten wzorzec jako oddzielenie kryterium dopasowania od obiektu, który jest według niego oceniany [3].
+Pierwszym sposobem uporządkowania warunków jest Specification. Eric Evans i Martin Fowler opisali ten wzorzec jako oddzielenie kryterium dopasowania od obiektu, który jest według niego oceniany [2].
 
 Zamiast ukrywać wszystkie warunki w metodzie `canBorrow()`, możemy nadać im nazwy:
 
@@ -102,7 +102,7 @@ Nie oznacza to jednak, że rozwiązaliśmy cały problem. Nazwaliśmy warunki i 
 
 ## Strategy - gdy zmienia się cały wariant zachowania
 
-Kiedy różne grupy użytkowników podlegają innym zestawom zasad, naturalnym kandydatem staje się Strategy, jeden z klasycznych wzorców opisanych przez Gang of Four [4].
+Kiedy różne grupy użytkowników podlegają innym zestawom zasad, naturalnym kandydatem staje się Strategy, jeden z klasycznych wzorców opisanych przez Gang of Four [3].
 
 Możemy wprowadzić:
 
@@ -132,6 +132,12 @@ Zamiast dzielić system według typu użytkownika, możemy podzielić decyzję h
 - polityka wyznaczania terminu zwrotu.
 
 Każda polityka sprawdza jeden aspekt. Łańcuch polityk zbiera ich wyniki albo zatrzymuje się po pierwszym odrzuceniu.
+
+Różnicę między tymi podziałami najłatwiej zobaczyć na jednym obrazku:
+
+![Podejście wertykalne i horyzontalne do warunków biznesowych](/blog/warunki-wertykalnie-horyzontalnie.svg)
+
+W podejściu wertykalnym wybór strategii oznacza wybór kompletnego wariantu zachowania. W podejściu horyzontalnym każda polityka odpowiada za jeden wymiar decyzji i może obsługiwać wiele typów użytkowników. Złożoność nie znika. Zmieniamy granice, według których ją dzielimy.
 
 W tym miejscu warto pożegnać się z gołym `bool`. Bibliotekarz i użytkownik nie potrzebują informacji, że decyzja ma wartość `false`. Potrzebują wiedzieć, dlaczego system odmówił:
 
@@ -188,7 +194,7 @@ Wtedy warto zadać pytanie:
 
 > Czy reguła nadal jest częścią algorytmu, czy stała się danymi przetwarzanymi przez algorytm?
 
-To właśnie tutaj przydaje się archetyp Rule opisany przez Jima Arlowa i Ilę Neustadt w "Enterprise Patterns and MDA" [5].
+To właśnie tutaj przydaje się archetyp Rule opisany przez Jima Arlowa i Ilę Neustadt w "Enterprise Patterns and MDA" [4].
 
 ---
 
@@ -270,7 +276,7 @@ Historia reguły odpowiada na inne:
 
 > Jaka polityka biznesowa obowiązywała dla zdarzenia z konkretnego dnia?
 
-Martin Fowler opisuje podobny problem w katalogu Temporal Patterns [6]. Wzorzec Effectivity oznacza obiekt okresem, w którym jest uznawany za obowiązujący. Temporal Object pozwala z kolei rozróżnić trwałą tożsamość pojęcia od jego kolejnych wersji.
+Martin Fowler opisuje podobny problem w katalogu Temporal Patterns [5]. Wzorzec Effectivity oznacza obiekt okresem, w którym jest uznawany za obowiązujący. Temporal Object pozwala z kolei rozróżnić trwałą tożsamość pojęcia od jego kolejnych wersji.
 
 Załóżmy, że użytkownik wypożyczył książkę 10 stycznia według wersji 3 reguły. Wersja 4 weszła w życie 1 lutego, a w marcu ktoś skorygował datę jej obowiązywania wstecz. Pytanie "dlaczego system pozwolił na wypożyczenie?" nie jest już pytaniem o aktualny kod. Jest pytaniem o:
 
@@ -337,7 +343,7 @@ Musimy określić:
 - jak wykrywamy sprzeczność,
 - jak testujemy cały zestaw.
 
-Martin Fowler ostrzega, że chaining w klasycznych silnikach reguł łatwo prowadzi do ukrytego przepływu sterowania, który jest trudny do zrozumienia i utrzymania [7]. Reguły można czytać pojedynczo i nadal nie rozumieć zachowania całego systemu.
+Martin Fowler ostrzega, że chaining w klasycznych silnikach reguł łatwo prowadzi do ukrytego przepływu sterowania, który jest trudny do zrozumienia i utrzymania [6]. Reguły można czytać pojedynczo i nadal nie rozumieć zachowania całego systemu.
 
 Dlatego przeniesienie `if`-ów do YAML-a nie usuwa złożoności. Czasem tylko sprawia, że IDE przestaje nam w niej pomagać.
 
@@ -349,7 +355,7 @@ Najczęściej nie.
 
 Jeżeli reguła jest stabilna, lokalna i zmieniana razem z aplikacją, zwykła metoda domenowa będzie prostsza, bardziej czytelna i łatwiejsza do debugowania.
 
-Rule Engine, własny DSL albo standard taki jak DMN [8] zaczynają mieć sens, gdy wartość dostarczana przez niezależne modelowanie reguł przewyższa koszt budowy dodatkowego języka, edytora, walidacji, wersjonowania, obserwowalności i narzędzi diagnostycznych.
+Rule Engine, własny DSL albo standard taki jak DMN [7] zaczynają mieć sens, gdy wartość dostarczana przez niezależne modelowanie reguł przewyższa koszt budowy dodatkowego języka, edytora, walidacji, wersjonowania, obserwowalności i narzędzi diagnostycznych.
 
 Dobrym testem jest pytanie:
 
@@ -385,11 +391,10 @@ System, który potrafi podać wynik, ale nie potrafi wskazać reguły, która do
 
 #### Linki do źródeł:
 
-* [[1] Jakub Ciszak, "Ujarzmienie reguł: Jak efektywnie zarządzać logiką biznesową w kodzie domenowym", PHPers Day 2025](https://youtu.be/LaFURw3Te4M)
-* [[2] Business Rules Group, "The Business Rules Manifesto", wersja 2.0](https://www.businessrulesgroup.org/brmanifesto.htm)
-* [[3] Eric Evans, Martin Fowler, "Specifications"](https://martinfowler.com/apsupp/spec.pdf)
-* [[4] Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software"](https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480)
-* [[5] Jim Arlow, Ila Neustadt, "Enterprise Patterns and MDA", rozdział 12: Rule archetype pattern](https://www.oreilly.com/library/view/enterprise-patterns-and/032111230X/ch12.html)
-* [[6] Martin Fowler, "Temporal Patterns"](https://martinfowler.com/eaaDev/timeNarrative.html)
-* [[7] Martin Fowler, "Rules Engine"](https://martinfowler.com/bliki/RulesEngine.html)
-* [[8] Object Management Group, "Decision Model and Notation"](https://www.omg.org/spec/DMN/)
+* [[1] Business Rules Group, "The Business Rules Manifesto", wersja 2.0](https://www.businessrulesgroup.org/brmanifesto.htm)
+* [[2] Eric Evans, Martin Fowler, "Specifications"](https://martinfowler.com/apsupp/spec.pdf)
+* [[3] Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides, "Design Patterns: Elements of Reusable Object-Oriented Software"](https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480)
+* [[4] Jim Arlow, Ila Neustadt, "Enterprise Patterns and MDA", rozdział 12: Rule archetype pattern](https://www.oreilly.com/library/view/enterprise-patterns-and/032111230X/ch12.html)
+* [[5] Martin Fowler, "Temporal Patterns"](https://martinfowler.com/eaaDev/timeNarrative.html)
+* [[6] Martin Fowler, "Rules Engine"](https://martinfowler.com/bliki/RulesEngine.html)
+* [[7] Object Management Group, "Decision Model and Notation"](https://www.omg.org/spec/DMN/)
