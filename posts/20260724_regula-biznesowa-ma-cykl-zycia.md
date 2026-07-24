@@ -387,6 +387,8 @@ Dopóki reguła jest prosta i stabilna, `if` może być najlepszym modelem, jaki
 
 System, który potrafi podać wynik, ale nie potrafi wskazać reguły, która do niego doprowadziła, nie automatyzuje polityki biznesowej. On ją tylko ukrywa.
 
+Przykładową implementację Rule Engine znajdziesz w repozytorium [jakubciszak/rule-engine](https://github.com/jakubciszak/rule-engine), a szerszy kontekst i diagramy na [slajdach z prezentacji "Ujarzmienie reguł" na PHPers Day 2025](https://github.com/jakubciszak/prezentations/blob/master/2025_ujarzmienie_regul_phpers%2FREGULY_BIZNESOWE_PHPERS.pptx).
+
 ---
 
 #### Linki do źródeł:
